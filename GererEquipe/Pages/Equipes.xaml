@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GererEquipe.Pages.Equipes"
+             Title="Equipes">
+    
+    <TableView Intent="Form">
+        <TableRoot>
+            <TableSection Title="Equipe à éditer">
+                <ViewCell>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Row="0" Grid.Column="0" Text="Nom équipe" />
+                        <Entry Grid.Row="0" Grid.Column="1" Placeholder="abcde" Text="{Binding Path=equipe.nomEquipe}" />
+                        <Label Grid.Row="1" Grid.Column="0" Text="Ville" />
+                        <Entry Grid.Row="1" Grid.Column="1" Placeholder="abcde" Text="{Binding Path=equipe.ville}" />
+                        <Label Grid.Row="2" Grid.Column="0" Text="Année création équipe" />
+                        <Entry Grid.Row="2" Grid.Column="2" Placeholder="2001" Text="{Binding Path=equipe.anneeDebut}" />
+                        <Label Grid.Row="3" Grid.Column="0" Text="Année de fin équipe" />
+                        <Entry Grid.Row="3" Grid.Column="2" Placeholder="2001" Text="{Binding Path=equipe.anneeFin}" />
+                        <Label Grid.Row="4" Grid.Column="0" Text="Est devenue équipe" />
+                        <Entry Grid.Row="4" Grid.Column="1" Placeholder="abcde" Text="à venir" />
+                        <Button Grid.Row="5" Grid.ColumnSpan="2" MaximumWidthRequest="125" Text="Ok" Command="{Binding Path=LireUneEquipe}" />
+                    </Grid>
+                </ViewCell>
+            </TableSection>
+        </TableRoot>
+    </TableView>
+</ContentPage>

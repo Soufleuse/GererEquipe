@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GererEquipe.MainPage"
+             Title="Liste des équipes">
+
+    <ContentPage.Resources>
+        <DataTemplate x:Key="headerTemplate">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Label Text="Nom de l'équipe" />
+                <Label Grid.Column="1" Text="Ville" />
+            </Grid>
+        </DataTemplate>
+    </ContentPage.Resources>
+
+    <StackLayout Margin="20">
+        <ListView ItemsSource="{Binding listeEquipe}"
+                  Header="{Binding .}"
+                  ItemSelected="listeEquipe_ItemSelected">
+
+            <ListView.HeaderTemplate>
+                <DataTemplate>
+                    <Grid BackgroundColor="LightGray">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Column="0" Text="Nom de l'équipe" Margin="25,0,0,0" />
+                        <Label Grid.Column="1" Text="Ville" />
+                        <Label Grid.Column="2" Text="Année de création" />
+                        <Label Grid.Column="3" Text="Année de fin" />
+                        <Label Grid.Column="5" Text="Est devenue équipe" />
+                    </Grid>
+                </DataTemplate>
+            </ListView.HeaderTemplate>
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid Padding="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Column="0" 
+                                   Text="{Binding nomEquipe}" />
+                            <Label Grid.Column="1" 
+                                   Text="{Binding ville}" />
+                            <Label Grid.Column="2" 
+                                   Text="{Binding anneeDebut}" />
+                            <Label Grid.Column="3" 
+                                   Text="{Binding anneeFin}" />
+                            <Label Grid.Column="4" 
+                                   Text="{Binding estDevenueEquipe}" />
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+
+</ContentPage>
