@@ -7,6 +7,17 @@ namespace GererEquipe.MVVM
 {
     public class LireEquipe : CsBaseContexte
     {
+        private LireEquipe() { }
+
+        public LireEquipe(int noEquipe)
+        {
+            var monClientHttp = new EquipeServices();
+
+            var monEquipe = monClientHttp.ObtenirEquipeAsync(noEquipe);
+            monEquipe.Wait();
+            equipe = monEquipe.Result;
+        }
+
         private CsBaseCommande _lireUneEquipe = null;
 
         private EquipeDto _equipe = default;
@@ -39,10 +50,10 @@ namespace GererEquipe.MVVM
 
         private async void LireEquipeRoutine(object objParametre)
         {
-            var monClientHttp = new EquipeServices();
+            /*var monClientHttp = new EquipeServices();
 
             var monEquipe = await monClientHttp.ObtenirEquipeAsync(1);
-            equipe = monEquipe;
+            equipe = monEquipe;*/
         }
     }
 }
