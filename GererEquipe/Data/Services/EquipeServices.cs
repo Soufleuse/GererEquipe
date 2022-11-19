@@ -1,7 +1,6 @@
 ﻿using System;
 using GererEquipe.Data.Dto;
 using System.Text.Json;
-//using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GererEquipe.Data.Services
@@ -14,7 +13,6 @@ namespace GererEquipe.Data.Services
         {
             var equipeDto = new EquipeDto();
 
-            //var uriEquipe = new Uri(string.Concat(_uriBase + "/EquipeBds/", id.ToString()));
             var uriEquipe = new Uri(string.Concat(_uriBase + "/Equipe/", id.ToString()));
 
             try
@@ -35,6 +33,31 @@ namespace GererEquipe.Data.Services
             }
 
             return equipeDto;
+        }
+
+        public async Task<string> ObtenirNomEquipeEstDevenu(long id)
+        {
+            var nomEquipeVille = string.Empty;
+
+            var uriEquipe = new Uri(string.Concat(_uriBase + "/Equipe/nomequipeville/", id.ToString()));
+
+            try
+            {
+                using (var htttpClient = new HttpClient())
+                {
+                    HttpResponseMessage reponse = await htttpClient.GetAsync(uriEquipe);
+                    if (reponse.IsSuccessStatusCode)
+                    {
+                        nomEquipeVille = await reponse.Content.ReadAsStringAsync();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return nomEquipeVille;
         }
 
         public async Task<List<EquipeDto>> ObtenirListeEquipeAsync()

@@ -16,5 +16,12 @@ namespace GererEquipe.Data.Dto
         public Int32? anneeFin { get; set; }
 
         public int? estDevenueEquipe { get; set; }
+
+        public string nomEquipeVilleEstDevenueEquipe { get; set; }
+
+        public override string ToString()
+        {
+            return string.Concat(this.nomEquipe, " ", this.ville);
+        }
     }
 }

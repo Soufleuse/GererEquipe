@@ -348,3 +348,9 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+*.v2
+.vs/ProjectEvaluation/gererequipe.projects.v5.1
+.vs/ProjectEvaluation/gererequipe.metadata.v5.1
+.vs/GererEquipe/v17/.suo
+.vs/GererEquipe/v17/.futdcache.v2
+.vs/GererEquipe/DesignTimeBuild/.dtbcache.v2

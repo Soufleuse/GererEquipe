@@ -7,18 +7,16 @@ namespace GererEquipe.MVVM
 {
     public class LireEquipe : CsBaseContexte
     {
-        private LireEquipe() { }
+        public LireEquipe() { }
 
-        public LireEquipe(int noEquipe)
+        public async void LireUneEquipe(int noEquipe, IEnumerable<EquipeDto> listeEquipe)
         {
             var monClientHttp = new EquipeServices();
+            equipe = await monClientHttp.ObtenirEquipeAsync(noEquipe);
 
-            var monEquipe = monClientHttp.ObtenirEquipeAsync(noEquipe);
-            monEquipe.Wait();
-            equipe = monEquipe.Result;
+            _listeEquipeEstDevenu = listeEquipe;
+            NotifierChangement("listeEquipeEstDevenu");
         }
-
-        private CsBaseCommande _lireUneEquipe = null;
 
         private EquipeDto _equipe = default;
         public EquipeDto equipe
@@ -34,17 +32,26 @@ namespace GererEquipe.MVVM
             }
         }
 
-        public CsBaseCommande LireUneEquipe
+        private IEnumerable<EquipeDto> _listeEquipeEstDevenu = null;
+
+        public IEnumerable<EquipeDto> listeEquipeEstDevenu
+        {
+            get { return _listeEquipeEstDevenu; }
+        }
+
+        private CsBaseCommande _SauvegarderEquipe = null;
+
+        public CsBaseCommande SauvegarderEquipe
         {
             get
             {
-                if(_lireUneEquipe == null)
+                if(_SauvegarderEquipe == null)
                 {
                     Action<object> action = new Action<object>(LireEquipeRoutine);
-                    _lireUneEquipe = new CsBaseCommande(action);
+                    _SauvegarderEquipe = new CsBaseCommande(action);
                 }
 
-                return _lireUneEquipe;
+                return _SauvegarderEquipe;
             }
         }
 

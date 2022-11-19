@@ -14,7 +14,10 @@ public partial class MainPage : ContentPage
 
     private async void listeEquipe_ItemSelected(object sender, SelectedItemChangedEventArgs e)
     {
-        //e.SelectedItem
-        await Navigation.PushAsync(new Equipes(((EquipeDto)e.SelectedItem).id));
+        var monContexte = (ListerEquipe)BindingContext;
+        var idEquipe = ((EquipeDto)e.SelectedItem).id;
+        List<EquipeDto> listeEquipeFiltree = (from item in monContexte.listeEquipe where item.id != idEquipe || item.anneeFin != null select item).ToList();
+        listeEquipeFiltree.Insert(0, new EquipeDto());
+        await Navigation.PushAsync(new Equipes(idEquipe, listeEquipeFiltree));
     }
 }

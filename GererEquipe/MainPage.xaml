@@ -67,7 +67,7 @@
                             <Label Grid.Column="3" 
                                    Text="{Binding anneeFin}" />
                             <Label Grid.Column="4" 
-                                   Text="{Binding estDevenueEquipe}" />
+                                   Text="{Binding nomEquipeVilleEstDevenueEquipe}" />
                         </Grid>
                     </ViewCell>
                 </DataTemplate>

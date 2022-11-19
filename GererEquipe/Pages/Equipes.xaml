@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:Convertisseurs="clr-namespace:GererEquipe.MVVM.Converter"
              x:Class="GererEquipe.Pages.Equipes"
              Title="Equipes">
-    
+
+    <ContentPage.Resources>
+        <Convertisseurs:EstDevenueEquipe x:Key="estDevenueEquipeConverter" />
+    </ContentPage.Resources>
+
     <TableView Intent="Form">
         <TableRoot>
             <TableSection Title="Equipe à éditer">
@@ -30,9 +35,19 @@
                         <Entry Grid.Row="2" Grid.Column="2" Placeholder="2001" Text="{Binding Path=equipe.anneeDebut}" />
                         <Label Grid.Row="3" Grid.Column="0" Text="Année de fin équipe" />
                         <Entry Grid.Row="3" Grid.Column="2" Placeholder="2001" Text="{Binding Path=equipe.anneeFin}" />
-                        <Label Grid.Row="4" Grid.Column="0" Text="Est devenue équipe" />
-                        <Entry Grid.Row="4" Grid.Column="1" Placeholder="abcde" Text="à venir" />
-                        <Button Grid.Row="5" Grid.ColumnSpan="2" MaximumWidthRequest="125" Text="Ok" Command="{Binding Path=LireUneEquipe}" />
+                        <Label Grid.Row="4"
+                               Grid.Column="0"
+                               Text="Est devenue équipe" />
+                        <Picker x:Name="nomEquipePicker"
+                                Grid.Row="4"
+                                Grid.Column="1"
+                                ItemsSource="{Binding Path=listeEquipeEstDevenu}"
+                                SelectedIndex="0" />
+                        <Button Grid.Row="5"
+                                Grid.ColumnSpan="2"
+                                MaximumWidthRequest="125"
+                                Text="Sauvegarder"
+                                Command="{Binding Path=SauvegarderEquipe}" />
                     </Grid>
                 </ViewCell>
             </TableSection>
