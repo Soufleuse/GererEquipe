@@ -349,6 +349,7 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 *.v2
+.vs/
 .vs/ProjectEvaluation/gererequipe.projects.v5.1
 .vs/ProjectEvaluation/gererequipe.metadata.v5.1
 .vs/GererEquipe/v17/.suo
