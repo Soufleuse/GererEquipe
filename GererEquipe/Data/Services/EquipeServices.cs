@@ -8,6 +8,7 @@ namespace GererEquipe.Data.Services
     internal class EquipeServices //: IEquipeService
     {
         internal const string _uriBase = "https://localhost:7166/api";
+        //internal const string _uriBase = "http://10.0.0.5:5000/api";
 
         public async Task<EquipeDto> ObtenirEquipeAsync(long id)
         {
