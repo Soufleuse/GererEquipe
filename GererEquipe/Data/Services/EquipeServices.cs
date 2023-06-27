@@ -1,13 +1,15 @@
 ﻿using System;
-using GererEquipe.Data.Dto;
+using System.Net;
 using System.Text.Json;
-using Microsoft.AspNetCore.Mvc;
+using GererEquipe.Data.Dto;
+using SteveMAUI.Commun;
 
 namespace GererEquipe.Data.Services
 {
     internal class EquipeServices //: IEquipeService
     {
-        internal const string _uriBase = "https://localhost:7166/api";
+        internal const string _uriBase = "http://localhost:5245/api"; // En http pour ne pas se badrer avec le SSL.
+        //internal const string _uriBase = "https://localhost:7166/api";
         //internal const string _uriBase = "http://10.0.0.5:5000/api";
 
         public async Task<EquipeDto> ObtenirEquipeAsync(long id)
@@ -30,7 +32,8 @@ namespace GererEquipe.Data.Services
             }
             catch( Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                string innerMesg = ex.InnerException == null ? string.Empty : ex.InnerException.Message;
+                TraitementMessages.ImprimerMessage(ex.Message, innerMesg, ex.StackTrace.ToString());
             }
 
             return equipeDto;
@@ -55,7 +58,8 @@ namespace GererEquipe.Data.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                string innerMesg = ex.InnerException == null ? string.Empty : ex.InnerException.Message;
+                TraitementMessages.ImprimerMessage(ex.Message, innerMesg, ex.StackTrace.ToString());
             }
 
             return nomEquipeVille;
@@ -81,16 +85,17 @@ namespace GererEquipe.Data.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                string innerMesg = ex.InnerException == null ? string.Empty : ex.InnerException.Message;
+                TraitementMessages.ImprimerMessage(ex.Message, innerMesg, ex.StackTrace.ToString());
             }
 
             return listeEquipeDto;
         }
 
-        public async Task<ActionResult> CreerEquipeAsync(EquipeDto item)
+        public async Task<HttpStatusCode> CreerEquipeAsync(EquipeDto item)
         {
             var uriEquipe = new Uri(_uriBase + "/Equipe/");
-            ActionResult retour = new OkResult();
+            HttpStatusCode retour = HttpStatusCode.Continue;
 
             try
             {
@@ -99,15 +104,13 @@ namespace GererEquipe.Data.Services
                     var equipeEnjson = JsonSerializer.Serialize(item, item.GetType());
                     var jesuisContent = new StringContent(equipeEnjson);
                     HttpResponseMessage reponse = await htttpClient.PostAsync(uriEquipe, jesuisContent);
-                    if (!reponse.IsSuccessStatusCode)
-                    {
-                        retour = new StatusCodeResult((int)reponse.StatusCode);
-                    }
+                    retour = reponse.StatusCode;
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                string innerMesg = ex.InnerException == null ? string.Empty : ex.InnerException.Message;
+                TraitementMessages.ImprimerMessage(ex.Message, innerMesg, ex.StackTrace.ToString());
             }
 
             return retour;

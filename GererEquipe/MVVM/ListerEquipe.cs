@@ -7,7 +7,6 @@ namespace GererEquipe.MVVM
 {
     public class ListerEquipe : CsBaseContexte
     {
-
         private List<EquipeDto> _listeEquipe = new List<EquipeDto>();
         public List<EquipeDto> listeEquipe
         {
@@ -29,7 +28,7 @@ namespace GererEquipe.MVVM
             {
                 if (item.estDevenueEquipe.HasValue)
                 {
-                    item.nomEquipeVilleEstDevenueEquipe=await monClientHttp.ObtenirNomEquipeEstDevenu(item.estDevenueEquipe.Value);
+                    item.nomEquipeVilleEstDevenueEquipe = await monClientHttp.ObtenirNomEquipeEstDevenu(item.estDevenueEquipe.Value);
                 }
             }
 
