@@ -47,7 +47,7 @@ namespace GererEquipe.MVVM
             {
                 if(_SauvegarderEquipe == null)
                 {
-                    Action<object> action = new Action<object>(LireEquipeRoutine);
+                    Action<object> action = new Action<object>(SauvegarderEquipeRoutine);
                     _SauvegarderEquipe = new CsBaseCommande(action);
                 }
 
@@ -55,12 +55,11 @@ namespace GererEquipe.MVVM
             }
         }
 
-        private async void LireEquipeRoutine(object objParametre)
+        private async void SauvegarderEquipeRoutine(object objParametre)
         {
-            /*var monClientHttp = new EquipeServices();
+            var monClientHttp = new EquipeServices();
 
-            var monEquipe = await monClientHttp.ObtenirEquipeAsync(1);
-            equipe = monEquipe;*/
+            var maStatuedeCire = await monClientHttp.CreerEquipeAsync(equipe);
         }
     }
 }
