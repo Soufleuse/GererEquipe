@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Net;
+using System.Web;
 using GererEquipe.Data.Dto;
 using GererEquipe.Data.Services;
 using SteveMAUI.MVVM;
@@ -32,6 +34,21 @@ namespace GererEquipe.MVVM
             }
         }
 
+        private string _messageErreur = string.Empty;
+
+        public string messageErreur
+        {
+            get { return _messageErreur; }
+            set
+            {
+                if(string.Compare(messageErreur, value) != 0)
+                {
+                    _messageErreur = value;
+                    NotifierChangement("messageErreur");
+                }
+            }
+        }
+
         private IEnumerable<EquipeDto> _listeEquipeEstDevenu = null;
 
         public IEnumerable<EquipeDto> listeEquipeEstDevenu
@@ -59,7 +76,38 @@ namespace GererEquipe.MVVM
         {
             var monClientHttp = new EquipeServices();
 
-            var maStatuedeCire = await monClientHttp.CreerEquipeAsync(equipe);
+            var maStatuedeCire = await monClientHttp.SauvegarderEquipeAsync(equipe);
+            switch (maStatuedeCire)
+            {
+                case HttpStatusCode.Created:
+                case HttpStatusCode.OK:
+                case HttpStatusCode.NoContent:
+                    messageErreur = "Réussite de la commande";
+                    break;
+                default:
+                    messageErreur = string.Format("Une erreur est survenue; no de l'erreur : {0}.", (int)maStatuedeCire);
+                    break;
+            }
+        }
+
+        private CsBaseCommande _InitialiserNouvelleEquipe = null;
+
+        public CsBaseCommande InitialiserNouvelleEquipe
+        {
+            get
+            {
+                if(_InitialiserNouvelleEquipe == null)
+                {
+                    Action<object> action = new Action<object>(InitialiserNouvelleEquipeRoutine);
+                    _InitialiserNouvelleEquipe = new CsBaseCommande(action);
+                }
+                return _InitialiserNouvelleEquipe;
+            }
+        }
+
+        private void InitialiserNouvelleEquipeRoutine(object objParametre)
+        {
+            equipe = new EquipeDto();
         }
     }
 }

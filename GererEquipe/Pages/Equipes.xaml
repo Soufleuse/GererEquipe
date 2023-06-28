@@ -17,8 +17,10 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition />
+                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
+                            <RowDefinition />
                             <RowDefinition />
                             <RowDefinition />
                             <RowDefinition />
@@ -29,12 +31,17 @@
 
                         <Label Grid.Row="0" Grid.Column="0" Text="Nom équipe" />
                         <Entry Grid.Row="0" Grid.Column="1" Placeholder="abcde" Text="{Binding Path=equipe.nomEquipe}" />
+                        <Button Grid.Row="0"
+                                Grid.Column="2"
+                                Text="Nouvelle équipe"
+                                MaximumWidthRequest="150"
+                                Command="{Binding Path=InitialiserNouvelleEquipe}" />
                         <Label Grid.Row="1" Grid.Column="0" Text="Ville" />
                         <Entry Grid.Row="1" Grid.Column="1" Placeholder="abcde" Text="{Binding Path=equipe.ville}" />
                         <Label Grid.Row="2" Grid.Column="0" Text="Année création équipe" />
-                        <Entry Grid.Row="2" Grid.Column="2" Placeholder="2001" Text="{Binding Path=equipe.anneeDebut}" />
+                        <Entry Grid.Row="2" Grid.Column="1" Placeholder="2001" Text="{Binding Path=equipe.anneeDebut}" />
                         <Label Grid.Row="3" Grid.Column="0" Text="Année de fin équipe" />
-                        <Entry Grid.Row="3" Grid.Column="2" Placeholder="2001" Text="{Binding Path=equipe.anneeFin}" />
+                        <Entry Grid.Row="3" Grid.Column="1" Placeholder="2001" Text="{Binding Path=equipe.anneeFin}" />
                         <Label Grid.Row="4"
                                Grid.Column="0"
                                Text="Est devenue équipe" />
@@ -48,6 +55,7 @@
                                 MaximumWidthRequest="125"
                                 Text="Sauvegarder"
                                 Command="{Binding Path=SauvegarderEquipe}" />
+                        <Entry Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding Path=messageErreur}" />
                     </Grid>
                 </ViewCell>
             </TableSection>

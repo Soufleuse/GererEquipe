@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Net.Http.Json;
 using System.Text.Json;
 using GererEquipe.Data.Dto;
 using SteveMAUI.Commun;
@@ -92,19 +93,46 @@ namespace GererEquipe.Data.Services
             return listeEquipeDto;
         }
 
-        public async Task<HttpStatusCode> CreerEquipeAsync(EquipeDto item)
+        public async Task<HttpStatusCode> SauvegarderEquipeAsync(EquipeDto item)
         {
-            var uriEquipe = new Uri(_uriBase + "/Equipe/");
             HttpStatusCode retour = HttpStatusCode.Continue;
 
             try
             {
-                using (var htttpClient = new HttpClient())
+                bool blnFaireCreation = false;
+                if (item.id < 1)
                 {
-                    var equipeEnjson = JsonSerializer.Serialize(item, item.GetType());
-                    var jesuisContent = new StringContent(equipeEnjson);
-                    HttpResponseMessage reponse = await htttpClient.PostAsync(uriEquipe, jesuisContent);
-                    retour = reponse.StatusCode;
+                    blnFaireCreation = true;
+                }
+                else
+                {
+                    var monEquipe = await ObtenirEquipeAsync(item.id);
+                    if (monEquipe == null)
+                    {
+                        blnFaireCreation = true;
+                    }
+                }
+
+                if (blnFaireCreation)
+                {
+                    using (var htttpClient = new HttpClient())
+                    {
+                        var uriEquipe = new Uri(_uriBase + "/Equipe/");
+                        var equipeEnjson = JsonSerializer.Serialize(item, item.GetType());
+                        var jesuisContent = new StringContent(equipeEnjson);
+                        HttpResponseMessage reponse = await htttpClient.PostAsync(uriEquipe, jesuisContent);
+                        retour = reponse.StatusCode;
+                    }
+                }
+                else
+                {
+                    using (var htttpClient = new HttpClient())
+                    {
+                        var uriEquipe = new Uri(_uriBase + "/Equipe/" + item.id.ToString());
+                        var jesuisContent = JsonContent.Create(item);
+                        HttpResponseMessage reponse = await htttpClient.PutAsync(uriEquipe, jesuisContent);
+                        retour = reponse.StatusCode;
+                    }
                 }
             }
             catch (Exception ex)
