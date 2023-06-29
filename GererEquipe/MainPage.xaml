@@ -22,6 +22,10 @@
     </ContentPage.Resources>
 
     <StackLayout Margin="20">
+        <Button x:Name="btnNouvelleEquipe"
+                Text="Créer nouvelle équipe"
+                MaximumWidthRequest="200"
+                Clicked="btnNouvelleEquipe_Clicked" />
         <ListView ItemsSource="{Binding listeEquipe}"
                   Header="{Binding .}"
                   ItemSelected="listeEquipe_ItemSelected">

@@ -20,4 +20,9 @@ public partial class MainPage : ContentPage
         listeEquipeFiltree.Insert(0, new EquipeDto());
         await Navigation.PushAsync(new Equipes(idEquipe, listeEquipeFiltree));
     }
+
+    private async void btnNouvelleEquipe_Clicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new Equipes());
+    }
 }

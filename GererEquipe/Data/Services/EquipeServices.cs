@@ -118,8 +118,7 @@ namespace GererEquipe.Data.Services
                     using (var htttpClient = new HttpClient())
                     {
                         var uriEquipe = new Uri(_uriBase + "/Equipe/");
-                        var equipeEnjson = JsonSerializer.Serialize(item, item.GetType());
-                        var jesuisContent = new StringContent(equipeEnjson);
+                        var jesuisContent = JsonContent.Create(item);
                         HttpResponseMessage reponse = await htttpClient.PostAsync(uriEquipe, jesuisContent);
                         retour = reponse.StatusCode;
                     }

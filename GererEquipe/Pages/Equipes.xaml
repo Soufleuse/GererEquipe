@@ -48,8 +48,8 @@
                         <Picker x:Name="nomEquipePicker"
                                 Grid.Row="4"
                                 Grid.Column="1"
-                                ItemsSource="{Binding Path=listeEquipeEstDevenu}"
-                                SelectedIndex="0" />
+                                ItemsSource="{Binding Path=listeEquipeEstDevenu, Mode=TwoWay}"
+                                SelectedIndex="{Binding Path=selectedIndexEstDevenueEquipe, Mode=TwoWay}" />
                         <Button Grid.Row="5"
                                 Grid.ColumnSpan="2"
                                 MaximumWidthRequest="125"

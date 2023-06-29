@@ -1,6 +1,6 @@
-﻿using SteveMAUI.MVVM;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using SteveMAUI.MVVM;
 
 namespace GererEquipe.Data.Dto
 {
