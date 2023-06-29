@@ -1,23 +1,108 @@
 ﻿using System;
 using System.Collections.Generic;
+using SteveMAUI.MVVM;
 
 namespace GererEquipe.Data.Dto
 {
-    public class EquipeDto
+    public class EquipeDto : CsBaseContexte
     {
-        public int id { get; set; }
+        private int _id = default(int);
+        public int id
+        {
+            get { return _id; }
+            set
+            {
+                if (_id != value)
+                {
+                    _id = value;
+                    NotifierChangement("id");
+                }
+            }
+        }
 
-        public string nomEquipe { get; set; } = default!;
+        private string _nomEquipe = default!;
+        public string nomEquipe
+        {
+            get { return _nomEquipe; }
+            set
+            {
+                if (string.Compare(nomEquipe, value) != 0)
+                {
+                    _nomEquipe = value;
+                    NotifierChangement(nomEquipe);
+                }
+            }
+        }
 
-        public string ville { get; set; } = default!;
+        private string _ville = default!;
+        public string ville
+        {
+            get { return _ville; }
+            set
+            {
+                if(string.Compare(ville, value) != 0)
+                {
+                    _ville = value;
+                    NotifierChangement("ville");
+                }
+            }
+        }
 
-        public Int32 anneeDebut { get; set; }
+        private Int32 _anneeDebut = DateTime.Now.Year;
+        public Int32 anneeDebut
+        {
+            get { return _anneeDebut; }
+            set
+            {
+                if (anneeDebut != value)
+                {
+                    _anneeDebut = value;
+                    NotifierChangement("anneeDebut");
+                }
+            }
+        }
 
-        public Int32? anneeFin { get; set; }
+        private Int32? _anneeFin = null;
+        public Int32? anneeFin
+        {
+            get { return _anneeFin; }
+            set
+            {
+                if(!Nullable<Int32>.Equals(anneeFin, value))
+                {
+                    _anneeFin = value;
+                    NotifierChangement("anneeFin");
+                }
+            }
+        }
 
-        public int? estDevenueEquipe { get; set; }
+        private int? _estDevenueEquipe = null;
+        public int? estDevenueEquipe
+        {
+            get { return _estDevenueEquipe; }
+            set
+            {
+                if(!Nullable<int>.Equals(estDevenueEquipe, value))
+                {
+                    _estDevenueEquipe = value;
+                    NotifierChangement("estDevenueEquipe");
+                }
+            }
+        }
 
-        public string nomEquipeVilleEstDevenueEquipe { get; set; }
+        private string _nomEquipeVilleEstDevenueEquipe = string.Empty;
+        public string nomEquipeVilleEstDevenueEquipe
+        {
+            get { return _nomEquipeVilleEstDevenueEquipe; }
+            set
+            {
+                if(string.Compare(nomEquipeVilleEstDevenueEquipe, value) != 0)
+                {
+                    _nomEquipeVilleEstDevenueEquipe = value;
+                    NotifierChangement("nomEquipeVilleEstDevenueEquipe");
+                }
+            }
+        }
 
         public override string ToString()
         {
