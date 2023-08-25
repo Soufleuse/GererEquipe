@@ -45,7 +45,7 @@
                         <Label Grid.Column="1" Text="Ville" />
                         <Label Grid.Column="2" Text="Année de création" />
                         <Label Grid.Column="3" Text="Année de fin" />
-                        <Label Grid.Column="5" Text="Est devenue équipe" />
+                        <Label Grid.Column="4" Text="Est devenue équipe" />
                     </Grid>
                 </DataTemplate>
             </ListView.HeaderTemplate>

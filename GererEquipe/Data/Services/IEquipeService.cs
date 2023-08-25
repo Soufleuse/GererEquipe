@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Threading.Tasks;
 using GererEquipe.Data.Dto;
 
@@ -6,12 +7,12 @@ namespace GererEquipe.Data.Services
 {
     internal interface IEquipeService
     {
-        Task<List<EquipeDto>> ObtenirListeEquipeAsync();
-
         Task<EquipeDto> ObtenirEquipeAsync(long id);
 
-        Task CreerEquipeAsync(EquipeDto item);
+        Task<string> ObtenirNomEquipeEstDevenu(long id);
 
-        Task MAJEquipeAsync(EquipeDto item);
+        Task<List<EquipeDto>> ObtenirListeEquipeAsync();
+
+        Task<HttpStatusCode> SauvegarderEquipeAsync(EquipeDto item);
     }
 }
