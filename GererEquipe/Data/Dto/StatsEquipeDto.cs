@@ -36,13 +36,14 @@ namespace GererEquipe.Data.Dto
         private short _nbVictoires = default(short);
         public short nbVictoires
         {
-            get { return nbVictoires; }
+            get { return _nbVictoires; }
             set
             {
                 if(nbVictoires != value)
                 {
                     _nbVictoires = value;
                     NotifierChangement("nbVictoires");
+                    NotifierChangement("nbPoints");
                 }
             }
         }
@@ -71,6 +72,7 @@ namespace GererEquipe.Data.Dto
                 {
                     _nbDefProlo = value;
                     NotifierChangement("nbDefProlo");
+                    NotifierChangement("nbPoints");
                 }
             }
         }
@@ -116,5 +118,18 @@ namespace GererEquipe.Data.Dto
                 }
             }
         }
+
+        private EquipeDto _equipe = null;
+        public EquipeDto equipe
+        {
+            get { return _equipe; }
+            set
+            {
+                _equipe = value;
+                NotifierChangement("equipe");
+            }
+        }
+
+        public int nbPoints { get { return nbVictoires * 2 + nbDefProlo; } }
     }
 }

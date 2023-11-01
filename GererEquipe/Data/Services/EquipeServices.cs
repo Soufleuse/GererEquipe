@@ -142,5 +142,32 @@ namespace GererEquipe.Data.Services
 
             return retour;
         }
+
+        public async Task<List<StatsEquipeDto>> ObtenirListeStatsEquipe(short pAnnee)
+        {
+            var listeStatsEquipeDto = new List<StatsEquipeDto>();
+
+            var uriEquipe = new Uri(string.Concat(_uriBase + "/StatsEquipe/parannee/", pAnnee.ToString()));
+
+            try
+            {
+                using (var htttpClient = new HttpClient())
+                {
+                    HttpResponseMessage reponse = await htttpClient.GetAsync(uriEquipe);
+                    if (reponse.IsSuccessStatusCode)
+                    {
+                        var content = await reponse.Content.ReadAsStringAsync();
+                        listeStatsEquipeDto = JsonSerializer.Deserialize<List<StatsEquipeDto>>(content);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string innerMesg = ex.InnerException == null ? string.Empty : ex.InnerException.Message;
+                TraitementMessages.ImprimerMessage(ex.Message, innerMesg, ex.StackTrace.ToString());
+            }
+
+            return listeStatsEquipeDto;
+        }
     }
 }
