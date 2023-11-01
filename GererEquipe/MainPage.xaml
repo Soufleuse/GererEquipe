@@ -91,7 +91,7 @@
                 Clicked="btnListerStatsEquipe_Clicked" />
         </HorizontalStackLayout>
         <ListView Margin="0,4,0,4"
-                  ItemsSource="{Binding listeStatsEquipe}"
+                  ItemsSource="{Binding listeEquipe}"
                   Header="{Binding .}"
                   ItemSelected="listeEquipe_ItemSelected"
                   HeaderTemplate="{StaticResource headerTemplate}"
