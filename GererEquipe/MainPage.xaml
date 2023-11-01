@@ -6,7 +6,7 @@
 
     <ContentPage.Resources>
         <DataTemplate x:Key="headerTemplate">
-            <Grid>
+            <Grid BackgroundColor="LightGray">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
@@ -15,8 +15,11 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <Label Text="Nom de l'équipe" />
+                <Label Grid.Column="0" Text="Nom de l'équipe" Margin="25,0,0,0" />
                 <Label Grid.Column="1" Text="Ville" />
+                <Label Grid.Column="2" Text="Année de création" />
+                <Label Grid.Column="3" Text="Année de fin" />
+                <Label Grid.Column="4" Text="Est devenue équipe" />
             </Grid>
         </DataTemplate>
     </ContentPage.Resources>
@@ -50,33 +53,50 @@
                 </DataTemplate>
             </ListView.HeaderTemplate>
 
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <Grid Padding="10">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
+        <DataTemplate x:Key="itemTemplate">
+            <ViewCell>
+                <Grid Padding="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
 
-                            <Label Grid.Column="0" 
+                    <Label Grid.Column="0" 
                                    Text="{Binding nomEquipe}" />
-                            <Label Grid.Column="1" 
+                    <Label Grid.Column="1" 
                                    Text="{Binding ville}" />
-                            <Label Grid.Column="2" 
+                    <Label Grid.Column="2" 
                                    Text="{Binding anneeDebut}" />
-                            <Label Grid.Column="3" 
+                    <Label Grid.Column="3" 
                                    Text="{Binding anneeFin}" />
-                            <Label Grid.Column="4" 
+                    <Label Grid.Column="4" 
                                    Text="{Binding nomEquipeVilleEstDevenueEquipe}" />
-                        </Grid>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
+                </Grid>
+            </ViewCell>
+        </DataTemplate>
+    </ContentPage.Resources>
+
+    <VerticalStackLayout Margin="20">
+        <HorizontalStackLayout Margin="0,4,0,4">
+            <Button x:Name="btnNouvelleEquipe"
+                Text="Créer nouvelle équipe"
+                MaximumWidthRequest="200"
+                Clicked="btnNouvelleEquipe_Clicked" />
+            <Button x:Name="btnListerStatsEquipe"
+                Text="Lister stats équipe"
+                MaximumWidthRequest="200"
+                Clicked="btnListerStatsEquipe_Clicked" />
+        </HorizontalStackLayout>
+        <ListView Margin="0,4,0,4"
+                  ItemsSource="{Binding listeStatsEquipe}"
+                  Header="{Binding .}"
+                  ItemSelected="listeEquipe_ItemSelected"
+                  HeaderTemplate="{StaticResource headerTemplate}"
+                  ItemTemplate="{StaticResource itemTemplate}">
         </ListView>
-    </StackLayout>
+    </VerticalStackLayout>
 
 </ContentPage>

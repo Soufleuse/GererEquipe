@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GererEquipe.Pages.StatsEquipe"
+             Title="StatsEquipe">
+
+    <ContentPage.Resources>
+        <DataTemplate x:Key="headerTemplate">
+            <Grid BackgroundColor="LightGray">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Text="Nom de l'équipe" Margin="25,0,0,0" />
+                <Label Grid.Column="1" Text="Ville" />
+                <Label Grid.Column="2" Text="Nb parties jouées" />
+                <Label Grid.Column="3" Text="Nb victoires" />
+                <Label Grid.Column="4" Text="Nb défaites" />
+                <Label Grid.Column="5" Text="Nd défaites en prolongation" />
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="itemTemplate">
+            <ViewCell>
+                <Grid Padding="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0" />
+                    <Label Grid.Column="1" />
+                    <Label Grid.Column="2"
+                           Text="{Binding nbPartiesJouees}" />
+                    <Label Grid.Column="3"
+                           Text="{Binding nbVictoires}" />
+                    <Label Grid.Column="4"
+                           Text="{Binding nbDefaites}" />
+                    <Label Grid.Column="5"
+                           Text="{Binding NbDefProlo}" />
+                </Grid>
+            </ViewCell>
+        </DataTemplate>
+    </ContentPage.Resources>
+    
+    <StackLayout>
+        <ListView Margin="0,4,0,4"
+                  ItemsSource="{Binding listeEquipe}"
+                  Header="{Binding .}"
+                  HeaderTemplate="{StaticResource headerTemplate}"
+                  ItemTemplate="{StaticResource itemTemplate}">
+            
+        </ListView>
+    </StackLayout>
+</ContentPage>
