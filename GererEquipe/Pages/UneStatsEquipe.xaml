@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GererEquipe.Pages.UneStatsEquipe"
+             Title="UneStatsEquipe">
+
+    <TableView Intent="Form">
+        <TableRoot>
+            <TableSection Title="Statistiques d'une équipe à éditer">
+                <ViewCell>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Row="0" Grid.Column="0" Text="Nom équipe" />
+                        <Entry Grid.Row="0" Grid.Column="1" Placeholder="abcde" Text="{Binding Path=equipe.nomEquipeVilleHote}" />
+                        <Button Grid.Row="0"
+                                Grid.Column="2"
+                                Text="Nouvelle équipe"
+                                MaximumWidthRequest="150"
+                                Command="{Binding Path=InitialiserNouvelleStatsEquipe}" />
+                        <Label Grid.Row="1" Grid.Column="0" Text="Nb parties jouées" />
+                        <Entry Grid.Row="1" Grid.Column="1" Placeholder="0" Text="{Binding Path=nbPartiesJouees}" />
+                        <Label Grid.Row="2" Grid.Column="0" Text="Nb victoires" />
+                        <Entry Grid.Row="2" Grid.Column="1" Placeholder="0" Text="{Binding Path=nbVictoires}" />
+                        <Label Grid.Row="3" Grid.Column="0" Text="Nb défaites" />
+                        <Entry Grid.Row="3" Grid.Column="1" Placeholder="0" Text="{Binding Path=nbDefaites}" />
+                        <Label Grid.Row="4" Grid.Column="0" Text="Nb déf. prol." />
+                        <Entry Grid.Row="4" Grid.Column="1" Text="{Binding Path=nbDefaitesProlo}" />
+                        <Label Grid.Row="5" Grid.Column="0" Text="Nb points" />
+                        <Entry Grid.Row="5" Grid.Column="1" Text="{Binding Path=nbPoints}" />
+                        <Button Grid.Row="6"
+                                Grid.ColumnSpan="2"
+                                MaximumWidthRequest="125"
+                                Text="Sauvegarder"
+                                Command="{Binding Path=SauvegarderStatsEquipe}" />
+                        <Entry Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding Path=messageErreur}" />
+                    </Grid>
+                </ViewCell>
+            </TableSection>
+        </TableRoot>
+    </TableView>
+</ContentPage>

@@ -22,36 +22,6 @@
                 <Label Grid.Column="4" Text="Est devenue équipe" />
             </Grid>
         </DataTemplate>
-    </ContentPage.Resources>
-
-    <StackLayout Margin="20">
-        <Button x:Name="btnNouvelleEquipe"
-                Text="Créer nouvelle équipe"
-                MaximumWidthRequest="200"
-                Clicked="btnNouvelleEquipe_Clicked" />
-        <ListView ItemsSource="{Binding listeEquipe}"
-                  Header="{Binding .}"
-                  ItemSelected="listeEquipe_ItemSelected">
-
-            <ListView.HeaderTemplate>
-                <DataTemplate>
-                    <Grid BackgroundColor="LightGray">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-
-                        <Label Grid.Column="0" Text="Nom de l'équipe" Margin="25,0,0,0" />
-                        <Label Grid.Column="1" Text="Ville" />
-                        <Label Grid.Column="2" Text="Année de création" />
-                        <Label Grid.Column="3" Text="Année de fin" />
-                        <Label Grid.Column="4" Text="Est devenue équipe" />
-                    </Grid>
-                </DataTemplate>
-            </ListView.HeaderTemplate>
 
         <DataTemplate x:Key="itemTemplate">
             <ViewCell>

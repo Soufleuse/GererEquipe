@@ -169,5 +169,32 @@ namespace GererEquipe.Data.Services
 
             return listeStatsEquipeDto;
         }
+    
+        public async Task<StatsEquipeDto> ObtenirStatsEquipe(int idEquipe, short annee)
+        {
+            StatsEquipeDto statsEquipe = null;
+            
+            var uriEquipe = new Uri(string.Format(_uriBase + "/StatsEquipe/{0}/{1}", idEquipe.ToString(), annee.ToString()));
+
+            try
+            {
+                using(var htttpClient = new HttpClient())
+                {
+                    HttpResponseMessage reponse = await htttpClient.GetAsync(uriEquipe);
+                    if (reponse.IsSuccessStatusCode)
+                    {
+                        var content = await reponse.Content.ReadAsStringAsync();
+                        statsEquipe = JsonSerializer.Deserialize<StatsEquipeDto>(content);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string innerMesg = ex.InnerException == null ? string.Empty : ex.InnerException.Message;
+                TraitementMessages.ImprimerMessage(ex.Message, innerMesg, ex.StackTrace.ToString());
+            }
+
+            return statsEquipe;
+        }
     }
 }
