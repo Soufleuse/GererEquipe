@@ -8,11 +8,9 @@ namespace GererEquipe.MVVM
 {
     public class LireStatsEquipe : CsBaseContexte
     {
-        private Page m_page;
-
-        public LireStatsEquipe(Page pPage)
+        public LireStatsEquipe(StatsEquipeDto pStatsEquipe)
         {
-            m_page = pPage;
+            this.statsEquipe = pStatsEquipe;
         }
 
         public async void LireUneStatsEquipe(int idEquipe, short anneeStats)
@@ -62,11 +60,10 @@ namespace GererEquipe.MVVM
             }
         }
 
-        private /*async*/ void SauvegarderStatsEquipeRoutine(object objParametre)
+        private async void SauvegarderStatsEquipeRoutine(object objParametre)
         {
-            m_page.DisplayAlert("Info", "En construction", "Annuler");
-            /*var monClientHttp = new EquipeServices();
-            var maStatuedeCire = await monClientHttp.SauvegarderEquipeAsync(equipe);
+            var monClientHttp = new EquipeServices();
+            var maStatuedeCire = await monClientHttp.SauvegarderStatsEquipeAsync(statsEquipe);
             switch (maStatuedeCire)
             {
                 case HttpStatusCode.Created:
@@ -77,7 +74,7 @@ namespace GererEquipe.MVVM
                 default:
                     messageErreur = string.Format("Une erreur est survenue; no de l'erreur : {0}.", (int)maStatuedeCire);
                     break;
-            }*/
+            }
         }
 
         private CsBaseCommande _InitialiserNouvelleStatsEquipe = null;
@@ -98,6 +95,23 @@ namespace GererEquipe.MVVM
         private void InitialiserNouvelleStatsEquipeRoutine(object objParametre)
         {
             statsEquipe = new StatsEquipeDto();
+            // Voir le summary de la fonction
+            AllerChercherAnneeCourante();
+            statsEquipe.anneeStats = ConfigGlobale.Instance.AnneeCourante;
+        }
+
+        /// <summary>
+        /// Juste pour faire sûr qu'on a été chercher l'année courante
+        /// </summary>
+        private async void AllerChercherAnneeCourante()
+        {
+            if (ConfigGlobale.Instance.AnneeCourante == short.MinValue)
+            {
+                var monParamHttp = new ParametresServices();
+                var monAnneeHttp = await monParamHttp.ObtenirParametreAsync("anneeCourante", DateTime.Now);
+
+                ConfigGlobale.Instance.AnneeCourante = Convert.ToInt16(monAnneeHttp.First().valeur);
+            }
         }
     }
 }

@@ -13,6 +13,20 @@ namespace GererEquipe.MVVM
             get { return _listeEquipe; }
         }
 
+        private CsBaseCommande _ListerEquipeAction = null;
+        public CsBaseCommande ListerEquipeAction
+        {
+            get
+            {
+                if (_ListerEquipeAction == null)
+                {
+                    var monAction = new Action<object>(ListerEquipeRoutine);
+                    _ListerEquipeAction = new CsBaseCommande(monAction);
+                }
+                return _ListerEquipeAction;
+            }
+        }
+
         public ListerEquipe()
         {
             ListerEquipeRoutine(null);

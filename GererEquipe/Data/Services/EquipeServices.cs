@@ -196,5 +196,50 @@ namespace GererEquipe.Data.Services
 
             return statsEquipe;
         }
+
+        public async Task<HttpStatusCode> SauvegarderStatsEquipeAsync(StatsEquipeDto item)
+        {
+            HttpStatusCode retour = HttpStatusCode.Continue;
+
+            try
+            {
+                bool blnFaireCreation = false;
+
+                var maStatsEquipe = await ObtenirStatsEquipe(item.equipeId, item.anneeStats);
+                if (maStatsEquipe == null)
+                {
+                    blnFaireCreation = true;
+                }
+
+                if (blnFaireCreation)
+                {
+                    using (var htttpClient = new HttpClient())
+                    {
+                        var uriEquipe = new Uri(_uriBase + "/StatsEquipe/");
+                        var jesuisContent = JsonContent.Create(item);
+                        HttpResponseMessage reponse = await htttpClient.PostAsync(uriEquipe, jesuisContent);
+                        retour = reponse.StatusCode;
+                    }
+                }
+                else
+                {
+                    using (var htttpClient = new HttpClient())
+                    {
+                        var urlSauvegarde = string.Format(_uriBase + "/StatsEquipe/{0}/{1}", item.equipeId, item.anneeStats);
+                        var uriEquipe = new Uri(urlSauvegarde);
+                        var jesuisContent = JsonContent.Create(item);
+                        HttpResponseMessage reponse = await htttpClient.PutAsync(uriEquipe, jesuisContent);
+                        retour = reponse.StatusCode;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string innerMesg = ex.InnerException == null ? string.Empty : ex.InnerException.Message;
+                TraitementMessages.ImprimerMessage(ex.Message, innerMesg, ex.StackTrace.ToString());
+            }
+
+            return retour;
+        }
     }
 }

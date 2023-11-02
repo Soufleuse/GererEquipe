@@ -1,12 +1,13 @@
+using GererEquipe.Data.Dto;
 using GererEquipe.MVVM;
 
 namespace GererEquipe.Pages;
 
 public partial class UneStatsEquipe : ContentPage
 {
-	public UneStatsEquipe()
+	public UneStatsEquipe(StatsEquipeDto statsEquipeSelectionnee)
 	{
 		InitializeComponent();
-		BindingContext = new ListerStatsEquipe();
+		BindingContext = new LireStatsEquipe(statsEquipeSelectionnee);
 	}
 }

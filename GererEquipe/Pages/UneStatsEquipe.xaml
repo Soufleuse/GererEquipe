@@ -26,22 +26,32 @@
                         </Grid.RowDefinitions>
 
                         <Label Grid.Row="0" Grid.Column="0" Text="Nom équipe" />
-                        <Entry Grid.Row="0" Grid.Column="1" Placeholder="abcde" Text="{Binding Path=equipe.nomEquipeVilleHote}" />
+                        <!-- IsVisible="{Binding AfficherEntryNomEquipe}" -->
+                        <Entry Grid.Row="0"
+                               Grid.Column="1"
+                               Placeholder="abcde"
+                               IsReadOnly="True"
+                               Text="{Binding Path=statsEquipe.equipe}" />
+                        <!--Picker Grid.Row="0"
+                                Grid.Column="1"
+                                IsVisible="{Binding AfficherPickerMomEquipe}"
+                                ItemsSource="{Binding Path=listeEquipe, Mode=TwoWay}"
+                                SelectedIndex="{Binding Path=equipeSelectionnee, Mode=TwoWay}" /-->
                         <Button Grid.Row="0"
                                 Grid.Column="2"
-                                Text="Nouvelle équipe"
-                                MaximumWidthRequest="150"
+                                Text="Nouvelle statistique"
+                                MaximumWidthRequest="200"
                                 Command="{Binding Path=InitialiserNouvelleStatsEquipe}" />
                         <Label Grid.Row="1" Grid.Column="0" Text="Nb parties jouées" />
-                        <Entry Grid.Row="1" Grid.Column="1" Placeholder="0" Text="{Binding Path=nbPartiesJouees}" />
+                        <Entry Grid.Row="1" Grid.Column="1" Placeholder="0" Text="{Binding Path=statsEquipe.nbPartiesJouees}" />
                         <Label Grid.Row="2" Grid.Column="0" Text="Nb victoires" />
-                        <Entry Grid.Row="2" Grid.Column="1" Placeholder="0" Text="{Binding Path=nbVictoires}" />
+                        <Entry Grid.Row="2" Grid.Column="1" Placeholder="0" Text="{Binding Path=statsEquipe.nbVictoires}" />
                         <Label Grid.Row="3" Grid.Column="0" Text="Nb défaites" />
-                        <Entry Grid.Row="3" Grid.Column="1" Placeholder="0" Text="{Binding Path=nbDefaites}" />
+                        <Entry Grid.Row="3" Grid.Column="1" Placeholder="0" Text="{Binding Path=statsEquipe.nbDefaites}" />
                         <Label Grid.Row="4" Grid.Column="0" Text="Nb déf. prol." />
-                        <Entry Grid.Row="4" Grid.Column="1" Text="{Binding Path=nbDefaitesProlo}" />
+                        <Entry Grid.Row="4" Grid.Column="1" Text="{Binding Path=statsEquipe.nbDefaitesProlo}" />
                         <Label Grid.Row="5" Grid.Column="0" Text="Nb points" />
-                        <Entry Grid.Row="5" Grid.Column="1" Text="{Binding Path=nbPoints}" />
+                        <Entry Grid.Row="5" Grid.Column="1" Text="{Binding Path=statsEquipe.nbPoints}" />
                         <Button Grid.Row="6"
                                 Grid.ColumnSpan="2"
                                 MaximumWidthRequest="125"
