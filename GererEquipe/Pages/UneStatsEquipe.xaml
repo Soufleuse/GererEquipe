@@ -26,36 +26,44 @@
                         </Grid.RowDefinitions>
 
                         <Label Grid.Row="0" Grid.Column="0" Text="Nom équipe" />
-                        <!-- IsVisible="{Binding AfficherEntryNomEquipe}" -->
                         <Entry Grid.Row="0"
                                Grid.Column="1"
                                Placeholder="abcde"
                                IsReadOnly="True"
+                               IsVisible="{Binding AfficherEntryNomEquipe}"
                                Text="{Binding Path=statsEquipe.equipe}" />
-                        <!--Picker Grid.Row="0"
+                        <Picker x:Name="pckEquipe"
+                                Grid.Row="0"
                                 Grid.Column="1"
-                                IsVisible="{Binding AfficherPickerMomEquipe}"
+                                IsVisible="{Binding AfficherPickerNomEquipe}"
                                 ItemsSource="{Binding Path=listeEquipe, Mode=TwoWay}"
-                                SelectedIndex="{Binding Path=equipeSelectionnee, Mode=TwoWay}" /-->
+                                SelectedItem="{Binding Path=equipeSelectionnee, Mode=TwoWay}"
+                                SelectedIndexChanged="pckEquipe_SelectedIndexChanged" />
                         <Button Grid.Row="0"
                                 Grid.Column="2"
                                 Text="Nouvelle statistique"
                                 MaximumWidthRequest="200"
+                                IsEnabled="{Binding AfficherBoutonNouvelleStats}"
                                 Command="{Binding Path=InitialiserNouvelleStatsEquipe}" />
                         <Label Grid.Row="1" Grid.Column="0" Text="Nb parties jouées" />
                         <Entry Grid.Row="1" Grid.Column="1" Placeholder="0" Text="{Binding Path=statsEquipe.nbPartiesJouees}" />
+                        <HorizontalStackLayout Grid.Row="1" Grid.Column="2" HorizontalOptions="Start">
+                            <Label VerticalTextAlignment="Center" Text="Année" />
+                            <Entry Placeholder="2001" IsReadOnly="True" Text="{Binding anneeStats}" />
+                        </HorizontalStackLayout>
                         <Label Grid.Row="2" Grid.Column="0" Text="Nb victoires" />
                         <Entry Grid.Row="2" Grid.Column="1" Placeholder="0" Text="{Binding Path=statsEquipe.nbVictoires}" />
                         <Label Grid.Row="3" Grid.Column="0" Text="Nb défaites" />
                         <Entry Grid.Row="3" Grid.Column="1" Placeholder="0" Text="{Binding Path=statsEquipe.nbDefaites}" />
                         <Label Grid.Row="4" Grid.Column="0" Text="Nb déf. prol." />
-                        <Entry Grid.Row="4" Grid.Column="1" Text="{Binding Path=statsEquipe.nbDefaitesProlo}" />
+                        <Entry Grid.Row="4" Grid.Column="1" Text="{Binding Path=statsEquipe.nbDefProlo}" />
                         <Label Grid.Row="5" Grid.Column="0" Text="Nb points" />
                         <Entry Grid.Row="5" Grid.Column="1" Text="{Binding Path=statsEquipe.nbPoints}" />
                         <Button Grid.Row="6"
                                 Grid.ColumnSpan="2"
                                 MaximumWidthRequest="125"
                                 Text="Sauvegarder"
+                                IsEnabled="{Binding estBtnSauvegarderEnabled}"
                                 Command="{Binding Path=SauvegarderStatsEquipe}" />
                         <Entry Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding Path=messageErreur}" />
                     </Grid>
