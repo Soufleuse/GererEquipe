@@ -16,7 +16,6 @@ public partial class Equipes : ContentPage
         if(noEquipe > 0)
         {
             ((LireEquipe)BindingContext).LireUneEquipe(noEquipe, listeEquipe);
-            nomEquipePicker.WidthRequest = 200;
         }
     }
 }

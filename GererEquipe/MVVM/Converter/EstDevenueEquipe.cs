@@ -1,7 +1,6 @@
-﻿using GererEquipe.Data.Dto;
+﻿using System;
+using GererEquipe.Data.Dto;
 using GererEquipe.Data.Services;
-using GererEquipe.Pages;
-using System;
 using System.Globalization;
 
 namespace GererEquipe.MVVM.Converter
@@ -35,7 +34,6 @@ namespace GererEquipe.MVVM.Converter
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            //throw new NotImplementedException();
             return null;
         }
     }

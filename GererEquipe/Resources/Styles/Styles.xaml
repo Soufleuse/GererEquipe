@@ -172,6 +172,7 @@
     </Style>
 
     <Style TargetType="Picker">
+        <Setter Property="Margin" Value="4" />
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" />
         <Setter Property="TitleColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray200}}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
@@ -383,5 +384,104 @@
         <Setter Property="UnselectedTabColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray950}}" />
         <Setter Property="SelectedTabColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
     </Style>
+
+    <!-- Mes styles -->
+    <DataTemplate x:Key="headerTemplateFenPrinc">
+        <Grid BackgroundColor="LightGray">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0" Text="Nom de l'équipe" Margin="25,0,0,0" />
+            <Label Grid.Column="1" Text="Ville" />
+            <Label Grid.Column="2" Text="Année de création" />
+            <Label Grid.Column="3" Text="Année de fin" />
+            <Label Grid.Column="4" Text="Est devenue équipe" />
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="itemTemplateFenPrinc">
+        <ViewCell>
+            <Grid Padding="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" 
+                                   Text="{Binding nomEquipe}" />
+                <Label Grid.Column="1" 
+                                   Text="{Binding ville}" />
+                <Label Grid.Column="2" 
+                                   Text="{Binding anneeDebut}" />
+                <Label Grid.Column="3" 
+                                   Text="{Binding anneeFin}" />
+                <Label Grid.Column="4" 
+                                   Text="{Binding nomEquipeVilleEstDevenueEquipe}" />
+            </Grid>
+        </ViewCell>
+    </DataTemplate>
+
+    <DataTemplate x:Key="headerTemplateStatsEquipe">
+        <Grid Padding="10,0,0,0" BackgroundColor="LightGray">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0" Text="Nom de l'équipe" Margin="15,0,0,0" />
+            <Label Grid.Column="1" Text="Ville" Margin="10,0,0,0" />
+            <Label Grid.Column="2" Text="Nb parties jouées" Margin="5,0,0,0" />
+            <Label Grid.Column="3" Text="Nb victoires" />
+            <Label Grid.Column="4" Text="Nb défaites" />
+            <Label Grid.Column="5" Text="Nb déf. en prol." />
+            <Label Grid.Column="6" Text="Nb points" />
+        </Grid>
+    </DataTemplate>
+    
+    <DataTemplate x:Key="itemTemplateStatsEquipe">
+        <ViewCell>
+            <Grid Padding="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0"
+                           Text="{Binding equipe.nomEquipe}" />
+                <Label Grid.Column="1"
+                           Text="{Binding equipe.ville}" />
+                <Label Grid.Column="2"
+                           Text="{Binding nbPartiesJouees}" />
+                <Label Grid.Column="3"
+                           Text="{Binding nbVictoires}" />
+                <Label Grid.Column="4"
+                           Text="{Binding nbDefaites}"
+                           Margin="10,0,0,0" />
+                <Label Grid.Column="5"
+                           Text="{Binding nbDefProlo}"
+                           Margin="10,0,0,0" />
+                <Label Grid.Column="6"
+                           Text="{Binding nbPoints}" />
+            </Grid>
+        </ViewCell>
+    </DataTemplate>
 
 </ResourceDictionary>

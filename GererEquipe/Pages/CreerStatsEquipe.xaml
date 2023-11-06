@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GererEquipe.Pages.CreerStatsEquipe"
+             Title="CreerStatsEquipe">
+
+    <TableView Intent="Form">
+        <TableRoot>
+            <TableSection Title="Statistiques d'une équipe à éditer">
+                <ViewCell>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Row="0" Grid.Column="0" Text="Nom équipe" />
+                        <Picker x:Name="pckEquipe"
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                WidthRequest="200"
+                                HorizontalOptions="Start"
+                                ItemsSource="{Binding Path=listeEquipe, Mode=TwoWay}"
+                                SelectedItem="{Binding Path=equipeSelectionnee, Mode=TwoWay}"
+                                SelectedIndexChanged="pckEquipe_SelectedIndexChanged" />
+                        <Label Grid.Row="1" Grid.Column="0" Text="Nb parties jouées" />
+                        <Entry Grid.Row="1" Grid.Column="1" Placeholder="0" Text="{Binding Path=statsEquipe.nbPartiesJouees}" />
+                        <HorizontalStackLayout Grid.Row="1" Grid.Column="2" HorizontalOptions="Start">
+                            <Label VerticalTextAlignment="Center" Text="Année" />
+                            <Entry Placeholder="2001" IsReadOnly="True" Text="{Binding anneeStats}" />
+                        </HorizontalStackLayout>
+                        <Label Grid.Row="2" Grid.Column="0" Text="Nb victoires" />
+                        <Entry Grid.Row="2" Grid.Column="1" Placeholder="0" Text="{Binding Path=statsEquipe.nbVictoires}" />
+                        <Label Grid.Row="3" Grid.Column="0" Text="Nb défaites" />
+                        <Entry Grid.Row="3" Grid.Column="1" Placeholder="0" Text="{Binding Path=statsEquipe.nbDefaites}" />
+                        <Label Grid.Row="4" Grid.Column="0" Text="Nb déf. prol." />
+                        <Entry Grid.Row="4" Grid.Column="1" Text="{Binding Path=statsEquipe.nbDefProlo}" />
+                        <Label Grid.Row="5" Grid.Column="0" Text="Nb points" />
+                        <Entry Grid.Row="5" Grid.Column="1" Text="{Binding Path=statsEquipe.nbPoints}" />
+                        <Button Grid.Row="6"
+                                Grid.ColumnSpan="2"
+                                MaximumWidthRequest="125"
+                                Text="Sauvegarder"
+                                IsEnabled="{Binding estBtnSauvegarderEnabled}"
+                                Command="{Binding Path=SauvegarderStatsEquipe}" />
+                        <Entry Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding Path=messageErreur}" />
+                    </Grid>
+                </ViewCell>
+            </TableSection>
+        </TableRoot>
+    </TableView>
+</ContentPage>
