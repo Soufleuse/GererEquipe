@@ -8,15 +8,20 @@ namespace GererEquipe.MVVM
 {
     public class LireStatsEquipe : CsBaseContexte
     {
-        public LireStatsEquipe(StatsEquipeDto pStatsEquipe)
+        public LireStatsEquipe(StatsEquipeDto pStatsEquipe, IEnumerable<EquipeDto> pListeEquipe)
         {
-            this.statsEquipe = pStatsEquipe;
+            _listeEquipe = pListeEquipe;
+
+            StatsEquipeDto statsEquipeLocale = pStatsEquipe;
+            if (pStatsEquipe == null)
+            {
+                statsEquipeLocale = new StatsEquipeDto();
+            }
+            this.statsEquipe = statsEquipeLocale;
 
             // Voir le summary de la fonction
             AllerChercherAnneeCourante();
             statsEquipe.anneeStats = ConfigGlobale.Instance.AnneeCourante;
-
-            ListerEquipeRoutine();
         }
 
         public async void LireUneStatsEquipe(int idEquipe, short anneeStats)
@@ -36,36 +41,6 @@ namespace GererEquipe.MVVM
             }
         }
 
-        private bool _AfficherEntryNomEquipe = true;
-        public bool AfficherEntryNomEquipe
-        {
-            get { return _AfficherEntryNomEquipe; }
-            set
-            {
-                _AfficherEntryNomEquipe = value;
-                _AfficherPickerNomEquipe = !_AfficherEntryNomEquipe;
-                NotifierChangement("AfficherEntryNomEquipe");
-                NotifierChangement("AfficherPickerNomEquipe");
-
-                // Si _AfficherEntryNomEquipe est true, on affiche le bouton de création
-                // de la nouvelle stats.
-                AfficherBoutonNouvelleStats = _AfficherEntryNomEquipe;
-            }
-        }
-
-        private bool _AfficherPickerNomEquipe = false;
-        public bool AfficherPickerNomEquipe
-        {
-            get { return _AfficherPickerNomEquipe; }
-            set
-            {
-                _AfficherPickerNomEquipe = value;
-                _AfficherEntryNomEquipe = !_AfficherPickerNomEquipe;
-                NotifierChangement("AfficherEntryNomEquipe");
-                NotifierChangement("AfficherPickerNomEquipe");
-            }
-        }
-
         private bool _AfficherBoutonNouvelleStats = true;
         public bool AfficherBoutonNouvelleStats
         {
@@ -77,8 +52,8 @@ namespace GererEquipe.MVVM
             }
         }
 
-        private List<EquipeDto> _listeEquipe = null;
-        public List<EquipeDto> listeEquipe { get { return _listeEquipe; } }
+        private IEnumerable<EquipeDto> _listeEquipe = null;
+        public IEnumerable<EquipeDto> listeEquipe { get { return _listeEquipe; } }
 
         private EquipeDto _equipeSelectionnee = null;
         public EquipeDto equipeSelectionnee
@@ -148,24 +123,6 @@ namespace GererEquipe.MVVM
             }
         }
 
-        private async void ListerEquipeRoutine()
-        {
-            var monClientHttp = new EquipeServices();
-
-            var listeEquipe = await monClientHttp.ObtenirListeEquipeAsync();
-
-            foreach (var item in listeEquipe)
-            {
-                if (item.estDevenueEquipe.HasValue)
-                {
-                    item.nomEquipeVilleEstDevenueEquipe = await monClientHttp.ObtenirNomEquipeEstDevenu(item.estDevenueEquipe.Value);
-                }
-            }
-
-            _listeEquipe = listeEquipe;
-            NotifierChangement("listeEquipe");
-        }
-
         private async void SauvegarderStatsEquipeRoutine(object objParametre)
         {
             var monClientHttp = new EquipeServices();
@@ -181,29 +138,6 @@ namespace GererEquipe.MVVM
                     messageErreur = string.Format("Une erreur est survenue; no de l'erreur : {0}.", (int)maStatuedeCire);
                     break;
             }
-        }
-
-        private CsBaseCommande _InitialiserNouvelleStatsEquipe = null;
-
-        public CsBaseCommande InitialiserNouvelleStatsEquipe
-        {
-            get
-            {
-                if (_InitialiserNouvelleStatsEquipe == null)
-                {
-                    Action<object> action = new Action<object>(InitialiserNouvelleStatsEquipeRoutine);
-                    _InitialiserNouvelleStatsEquipe = new CsBaseCommande(action);
-                }
-                return _InitialiserNouvelleStatsEquipe;
-            }
-        }
-
-        private void InitialiserNouvelleStatsEquipeRoutine(object objParametre)
-        {
-            statsEquipe = new StatsEquipeDto();
-
-            // AfficherPickerNomEquipe devrait se mettre à true automatique.
-            AfficherEntryNomEquipe = false;
         }
 
         /// <summary>

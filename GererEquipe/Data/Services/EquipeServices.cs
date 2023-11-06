@@ -211,6 +211,14 @@ namespace GererEquipe.Data.Services
                     blnFaireCreation = true;
                 }
 
+                var monEquipe = await ObtenirEquipeAsync(item.equipeId);
+                if (monEquipe == null)
+                {
+                    throw new Exception("Équipe non-trouvée");
+                }
+
+                item.equipe = monEquipe;
+
                 if (blnFaireCreation)
                 {
                     using (var htttpClient = new HttpClient())

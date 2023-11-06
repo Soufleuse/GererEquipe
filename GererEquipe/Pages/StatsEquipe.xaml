@@ -3,13 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GererEquipe.Pages.StatsEquipe"
              Title="StatsEquipe">
-    
-    <StackLayout>
+
+    <VerticalStackLayout Margin="20">
+        <HorizontalStackLayout Margin="0,4,0,4">
+            <Button x:Name="btnNouvelleStatsEquipe"
+                Text="Nouvelle statistique"
+                MaximumWidthRequest="200"
+                Clicked="btnNouvelleStatsEquipe_Clicked"/>
+        </HorizontalStackLayout>
         <ListView Margin="0,4,0,4"
                   ItemsSource="{Binding listeStatsEquipe}"
                   Header="{Binding .}"
                   HeaderTemplate="{StaticResource headerTemplateStatsEquipe}"
                   ItemTemplate="{StaticResource itemTemplateStatsEquipe}"
                   ItemSelected="listeStatsEquipe_ItemSelected" />
-    </StackLayout>
+    </VerticalStackLayout>
 </ContentPage>

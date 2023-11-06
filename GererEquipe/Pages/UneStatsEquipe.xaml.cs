@@ -5,22 +5,9 @@ namespace GererEquipe.Pages;
 
 public partial class UneStatsEquipe : ContentPage
 {
-	public UneStatsEquipe(StatsEquipeDto statsEquipeSelectionnee)
+	public UneStatsEquipe(StatsEquipeDto statsEquipeSelectionnee, IEnumerable<EquipeDto> pListeEquipe)
 	{
 		InitializeComponent();
-		BindingContext = new LireStatsEquipe(statsEquipeSelectionnee);
+		BindingContext = new LireStatsEquipe(statsEquipeSelectionnee, pListeEquipe);
 	}
-
-    private void pckEquipe_SelectedIndexChanged(object sender, EventArgs e)
-    {
-		var monContexte = (LireStatsEquipe)BindingContext;
-
-		monContexte.estBtnSauvegarderEnabled = false;
-		monContexte.statsEquipe.equipeId = 0;
-        if (monContexte.equipeSelectionnee != null)
-		{
-			monContexte.statsEquipe.equipeId = monContexte.equipeSelectionnee.id;
-			monContexte.estBtnSauvegarderEnabled = true;
-        }
-    }
 }

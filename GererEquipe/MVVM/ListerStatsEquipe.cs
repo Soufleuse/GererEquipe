@@ -7,11 +7,14 @@ namespace GererEquipe.MVVM
 {
     public class ListerStatsEquipe : CsBaseContexte
     {
-        private List<StatsEquipeDto> _listeStatsEquipe = new List<StatsEquipeDto>();
+        private List<StatsEquipeDto> _listeStatsEquipe = null;
         public List<StatsEquipeDto> listeStatsEquipe
         {
             get { return _listeStatsEquipe; }
         }
+
+        private IEnumerable<EquipeDto> _listeEquipe = null;
+        public IEnumerable<EquipeDto> listeEquipe { get { return _listeEquipe; } }
 
         public ListerStatsEquipe()
         {
@@ -30,10 +33,14 @@ namespace GererEquipe.MVVM
 
             var monClientHttp = new EquipeServices();
 
-            var listeStatsEquipe = await monClientHttp.ObtenirListeStatsEquipe(ConfigGlobale.Instance.AnneeCourante);
+            var listeStatsEquipeLocale = await monClientHttp.ObtenirListeStatsEquipe(ConfigGlobale.Instance.AnneeCourante);
 
-            _listeStatsEquipe = listeStatsEquipe;
+            _listeStatsEquipe = listeStatsEquipeLocale;
             NotifierChangement("listeStatsEquipe");
+
+            var listeEquipeLocale = await monClientHttp.ObtenirListeEquipeAsync();
+            _listeEquipe = listeEquipeLocale;
+            NotifierChangement("listeEquipe");
         }
     }
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GererEquipe.Pages.UneStatsEquipe"
-             Title="UneStatsEquipe">
+             x:Class="GererEquipe.Pages.CreerStatsEquipe"
+             Title="CreerStatsEquipe">
 
     <TableView Intent="Form">
         <TableRoot>
@@ -26,11 +26,13 @@
                         </Grid.RowDefinitions>
 
                         <Label Grid.Row="0" Grid.Column="0" Text="Nom équipe" />
-                        <Entry Grid.Row="0"
-                               Grid.Column="1"
-                               Placeholder="abcde"
-                               IsReadOnly="True"
-                               Text="{Binding Path=statsEquipe.equipe}" />
+                        <Picker x:Name="pckEquipe"
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                WidthRequest="200"
+                                ItemsSource="{Binding Path=listeEquipe, Mode=TwoWay}"
+                                SelectedItem="{Binding Path=equipeSelectionnee, Mode=TwoWay}"
+                                SelectedIndexChanged="pckEquipe_SelectedIndexChanged" />
                         <Label Grid.Row="1" Grid.Column="0" Text="Nb parties jouées" />
                         <Entry Grid.Row="1" Grid.Column="1" Placeholder="0" Text="{Binding Path=statsEquipe.nbPartiesJouees}" />
                         <HorizontalStackLayout Grid.Row="1" Grid.Column="2" HorizontalOptions="Start">
