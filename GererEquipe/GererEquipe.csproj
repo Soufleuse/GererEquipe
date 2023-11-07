@@ -56,6 +56,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Controles\EntreeNumerique.xaml.cs">
+	    <DependentUpon>EntreeNumerique.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Controles\EntreeNumerique.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\CreerStatsEquipe.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
