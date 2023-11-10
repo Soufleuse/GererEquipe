@@ -33,29 +33,31 @@
             <MesControles:EntreeNumerique Grid.Row="1"
                                           Grid.Column="1"
                                           FormatExempleEntry="82"
-                                          PermettreValeurNull="False"
+                                          LongueurMaxChampEdition="2"
                                           Valeur="{Binding Path=statsEquipe.nbPartiesJouees}" />
             <HorizontalStackLayout Grid.Row="1" Grid.Column="2" HorizontalOptions="Start">
                 <Label VerticalTextAlignment="Center" Text="Année" />
-                <!--MesControles:EntreeNumerique FormatExempleEntry="2001" EstLectureSeule="True" Valeur="{Binding anneeStats}" /-->
+                <MesControles:EntreeNumerique FormatExempleEntry="2001"
+                                              EstLectureSeule="True"
+                                              Valeur="{Binding statsEquipe.anneeStats}" />
             </HorizontalStackLayout>
             <Label Grid.Row="2" Grid.Column="0" Text="Nb victoires" />
             <MesControles:EntreeNumerique Grid.Row="2"
                                           Grid.Column="1"
                                           FormatExempleEntry="0"
-                                          PermettreValeurNull="False"
+                                          LongueurMaxChampEdition="2"
                                           Valeur="{Binding Path=statsEquipe.nbVictoires}" />
             <Label Grid.Row="3" Grid.Column="0" Text="Nb défaites" />
             <MesControles:EntreeNumerique Grid.Row="3"
                                           Grid.Column="1"
                                           FormatExempleEntry="0"
-                                          PermettreValeurNull="False"
+                                          LongueurMaxChampEdition="2"
                                           Valeur="{Binding Path=statsEquipe.nbDefaites}" />
             <Label Grid.Row="4" Grid.Column="0" Text="Nb déf. prol." />
             <MesControles:EntreeNumerique Grid.Row="4"
                                           Grid.Column="1"
                                           FormatExempleEntry="0"
-                                          PermettreValeurNull="False"
+                                          LongueurMaxChampEdition="2"
                                           Valeur="{Binding Path=statsEquipe.nbDefProlo}" />
             <Label Grid.Row="5" Grid.Column="0" Text="Nb points" />
             <MesControles:EntreeNumerique Grid.Row="5"

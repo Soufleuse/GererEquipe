@@ -8,7 +8,11 @@ namespace GererEquipe.MVVM
 {
     public class LireEquipe : CsBaseContexte
     {
-        public LireEquipe() { }
+        public LireEquipe(int pAnneeCourante)
+        {
+            _AnneeCourante = pAnneeCourante;
+            NotifierChangement("AnneeCourante");
+        }
 
         public async void LireUneEquipe(int noEquipe, IEnumerable<EquipeDto> listeEquipe)
         {
@@ -87,6 +91,11 @@ namespace GererEquipe.MVVM
             }
         }
 
+        private int AnnneMinimum { get {  return 1800; } }
+
+        private int _AnneeCourante = 0;
+        public int AnneeCourante { get { return _AnneeCourante; } }
+
         private CsBaseCommande _SauvegarderEquipe = null;
         public CsBaseCommande SauvegarderEquipe
         {
@@ -143,6 +152,7 @@ namespace GererEquipe.MVVM
         private void InitialiserNouvelleEquipeRoutine(object objParametre)
         {
             equipe = new EquipeDto();
+            equipe.anneeDebut = ConfigGlobale.Instance.AnneeCourante;
         }
     }
 }

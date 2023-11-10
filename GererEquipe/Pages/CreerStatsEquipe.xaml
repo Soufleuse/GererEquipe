@@ -36,7 +36,6 @@
             <MesControles:EntreeNumerique Grid.Row="1"
                                           Grid.Column="1"
                                           FormatExempleEntry="0"
-                                          PermettreValeurNull="False"
                                           Valeur="{Binding Path=statsEquipe.nbPartiesJouees}" />
             <HorizontalStackLayout Grid.Row="1" Grid.Column="2" HorizontalOptions="Start">
                 <Label VerticalTextAlignment="Center" Text="Année" />
@@ -48,25 +47,24 @@
             <MesControles:EntreeNumerique Grid.Row="2"
                                           Grid.Column="1"
                                           FormatExempleEntry="0"
-                                          PermettreValeurNull="False"
+                                          LongueurMaxChampEdition="2"
                                           Valeur="{Binding Path=statsEquipe.nbVictoires}" />
             <Label Grid.Row="3" Grid.Column="0" Text="Nb défaites" />
             <MesControles:EntreeNumerique Grid.Row="3"
                                           Grid.Column="1"
                                           FormatExempleEntry="0"
-                                          PermettreValeurNull="False"
+                                          LongueurMaxChampEdition="2"
                                           Valeur="{Binding Path=statsEquipe.nbDefaites}" />
             <Label Grid.Row="4" Grid.Column="0" Text="Nb déf. prol." />
             <MesControles:EntreeNumerique Grid.Row="4"
                                           Grid.Column="1"
                                           FormatExempleEntry="0"
-                                          PermettreValeurNull="False"
+                                          LongueurMaxChampEdition="2"
                                           Valeur="{Binding Path=statsEquipe.nbDefProlo}" />
             <Label Grid.Row="5" Grid.Column="0" Text="Nb points" />
             <MesControles:EntreeNumerique Grid.Row="5"
                                           Grid.Column="1"
                                           EstLectureSeule="True"
-                                          PermettreValeurNull="False"
                                           Valeur="{Binding Path=statsEquipe.nbPoints}" />
             <Button Grid.Row="6"
                     Grid.ColumnSpan="2"

@@ -19,8 +19,6 @@ namespace GererEquipe.MVVM
             }
             this.statsEquipe = statsEquipeLocale;
 
-            // Voir le summary de la fonction
-            AllerChercherAnneeCourante();
             statsEquipe.anneeStats = ConfigGlobale.Instance.AnneeCourante;
         }
 
@@ -63,20 +61,6 @@ namespace GererEquipe.MVVM
             {
                 _equipeSelectionnee = value;
                 NotifierChangement("equipeSelectionnee");
-            }
-        }
-
-        private short _anneeStats = short.MinValue;
-        public short anneeStats
-        {
-            get { return _anneeStats; }
-            set
-            {
-                if(anneeStats != value)
-                {
-                    _anneeStats = value;
-                    NotifierChangement("anneeStats");
-                }
             }
         }
 
@@ -138,22 +122,6 @@ namespace GererEquipe.MVVM
                     messageErreur = string.Format("Une erreur est survenue; no de l'erreur : {0}.", (int)maStatuedeCire);
                     break;
             }
-        }
-
-        /// <summary>
-        /// Juste pour faire sûr qu'on a été chercher l'année courante
-        /// </summary>
-        private async void AllerChercherAnneeCourante()
-        {
-            if (ConfigGlobale.Instance.AnneeCourante == short.MinValue)
-            {
-                var monParamHttp = new ParametresServices();
-                var monAnneeHttp = await monParamHttp.ObtenirParametreAsync("anneeCourante", DateTime.Now);
-
-                ConfigGlobale.Instance.AnneeCourante = Convert.ToInt16(monAnneeHttp.First().valeur);
-            }
-
-            anneeStats = ConfigGlobale.Instance.AnneeCourante;
         }
     }
 }

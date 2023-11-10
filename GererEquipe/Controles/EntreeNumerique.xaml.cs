@@ -2,6 +2,19 @@ namespace GererEquipe.Controles;
 
 public partial class EntreeNumerique : ContentView
 {
+    public static readonly BindableProperty LongueurMaxChampEditionProperty
+        = BindableProperty.Create(nameof(LongueurMaxChampEdition),
+                                  typeof(int),
+                                  typeof(EntreeNumerique),
+                                  int.MaxValue,
+                                  BindingMode.TwoWay);
+
+    public int LongueurMaxChampEdition
+    {
+        get => (int)GetValue(LongueurMaxChampEditionProperty);
+        set => SetValue(LongueurMaxChampEditionProperty, value);
+    }
+
     public static readonly BindableProperty EstLectureSeuleProperty =
         BindableProperty.Create(nameof(EstLectureSeule),
                                 typeof(bool),
@@ -45,16 +58,42 @@ public partial class EntreeNumerique : ContentView
 	}
 
 	public static readonly BindableProperty ValeurMinimumProperty =
-		BindableProperty.Create(nameof(ValeurMinimum), typeof(Int32), typeof(EntreeNumerique), Int32.MinValue);
+		BindableProperty.Create(nameof(ValeurMinimum),
+                                typeof(Int32),
+                                typeof(EntreeNumerique),
+                                Int32.MinValue,
+                                BindingMode.Default,
+                                null,
+                                ValeurMinimumPropertyChanged);
 
-	public Int32 ValeurMinimum
-	{
-		get => (Int32)GetValue(ValeurMinimumProperty);
-		set => SetValue(ValeurMinimumProperty, value);
+    public Int32 ValeurMinimum
+    {
+        get => (Int32)GetValue(ValeurMinimumProperty);
+        set => SetValue(ValeurMinimumProperty, value);
+    }
+
+    private static void ValeurMinimumPropertyChanged(BindableObject pBindable, object pVieilleValeur, object pNouvelleValeur)
+    {
+        var nouvelleValeur = (Int32)pNouvelleValeur;
+        var monEntree = (EntreeNumerique)pBindable;
+
+        if (monEntree.ValeurParDefaut.HasValue)
+        {
+            if(monEntree.ValeurParDefaut.Value < nouvelleValeur)
+            {
+                monEntree.ValeurParDefaut = nouvelleValeur;
+            }
+        }
     }
 
     public static readonly BindableProperty ValeurMaximumProperty =
-        BindableProperty.Create(nameof(ValeurMaximum), typeof(Int32), typeof(EntreeNumerique), Int32.MaxValue);
+        BindableProperty.Create(nameof(ValeurMaximum),
+                                typeof(Int32),
+                                typeof(EntreeNumerique),
+                                Int32.MaxValue,
+                                BindingMode.Default,
+                                null,
+                                ValeurMaximumPropertyChanged);
 
     public Int32 ValeurMaximum
     {
@@ -62,8 +101,42 @@ public partial class EntreeNumerique : ContentView
         set => SetValue(ValeurMaximumProperty, value);
     }
 
+    private static void ValeurMaximumPropertyChanged(BindableObject pBindable, object pVieilleValeur, object pNouvelleValeur)
+    {
+        var nouvelleValeur = (Int32)pNouvelleValeur;
+        var monEntree = (EntreeNumerique)pBindable;
+
+        if (monEntree.ValeurParDefaut.HasValue)
+        {
+            if (monEntree.ValeurParDefaut.Value > nouvelleValeur)
+            {
+                monEntree.ValeurParDefaut = nouvelleValeur;
+            }
+        }
+    }
+
     public static readonly BindableProperty PermettreValeurNullProperty =
-        BindableProperty.Create(nameof(PermettreValeurNull), typeof(bool), typeof(EntreeNumerique), true);
+        BindableProperty.Create(nameof(PermettreValeurNull),
+                                typeof(bool),
+                                typeof(EntreeNumerique),
+                                false,
+                                BindingMode.TwoWay,
+                                null,
+                                PermettreValeurNullPropertyChanged);
+
+    private static void PermettreValeurNullPropertyChanged(BindableObject pBindable, object pVieilleValeur, object pNouvelleValeur)
+    {
+        var nouvelleValeur = (bool)pNouvelleValeur;
+        var monEntree = (EntreeNumerique)pBindable;
+
+        bool estZeroEntreMinEtMax = false;
+        if (monEntree.ValeurMinimum <= 0 && monEntree.ValeurMaximum >= 0)
+        {
+            estZeroEntreMinEtMax = true;
+        }
+
+        monEntree.ValeurParDefaut = nouvelleValeur ? null : estZeroEntreMinEtMax ? 0 : monEntree.ValeurMinimum;
+    }
 
     public bool PermettreValeurNull
 	{
@@ -120,7 +193,13 @@ public partial class EntreeNumerique : ContentView
 								0,
                                 BindingMode.TwoWay,
                                 IsValeurValide,
-                                OnValeurChanged);
+                                OnValeurChanged,
+                                null,
+                                null,
+                                bindable => {
+                                    if ((bool)bindable.GetValue(PermettreValeurNullProperty)) return null;
+                                    return (Int32)bindable.GetValue(ValeurMinimumProperty);
+                                });
 
 	public Int32? Valeur
 	{
@@ -173,7 +252,7 @@ public partial class EntreeNumerique : ContentView
     private static void OnValeurChanged(BindableObject pBindable, object pVieilleValeur, object pNouvelleValeur)
     {
         var monControle = (EntreeNumerique)pBindable;
-        monControle.txtValeur.Text = pNouvelleValeur.ToString();
+        monControle.txtValeur.Text = pNouvelleValeur == null ? string.Empty : pNouvelleValeur.ToString();
     }
 
     public EntreeNumerique()
@@ -199,6 +278,10 @@ public partial class EntreeNumerique : ContentView
         {
             txtValeur.Text = Valeur.Value.ToString();
         }
+        else
+        {
+            txtValeur.Text = string.Empty;
+        }
     }
 
     private void txtValeur_Unfocused(object sender, FocusEventArgs e)
@@ -208,7 +291,6 @@ public partial class EntreeNumerique : ContentView
 
 		var monEntreeNumerique = (EntreeNumerique)entree.Parent.Parent;
 		LibelleErreur = string.Empty;
-        Valeur = monEntreeNumerique.ValeurMinimum;
 
 		if (string.IsNullOrEmpty(entree.Text))
 		{
@@ -219,8 +301,8 @@ public partial class EntreeNumerique : ContentView
             }
             else
             {
-				// La valeur est déjà à la valeur minimum.
-				entree.Text = Valeur.ToString();
+                Valeur = monEntreeNumerique.ValeurParDefaut;
+                entree.Text = Valeur.ToString();
             }
 
             return;

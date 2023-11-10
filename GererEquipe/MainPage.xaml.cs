@@ -1,4 +1,5 @@
 ﻿using GererEquipe.Data.Dto;
+using GererEquipe.Data.Services;
 using GererEquipe.MVVM;
 using GererEquipe.Pages;
 
@@ -9,6 +10,7 @@ public partial class MainPage : ContentPage
     public MainPage()
     {
         InitializeComponent();
+        AllerChercherAnneeCourante();
         BindingContext = new ListerEquipe();
     }
 
@@ -29,5 +31,24 @@ public partial class MainPage : ContentPage
     private async void btnListerStatsEquipe_Clicked(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new StatsEquipe());
+    }
+
+    internal void AllerChercherAnneeCourante()
+    {
+        if (ConfigGlobale.Instance.AnneeCourante == short.MinValue)
+        {
+            var maThread = new Thread(async () => {
+                var monParamHttp = new ParametresServices();
+                var monAnneeHttp = await monParamHttp.ObtenirParametreAsync("anneeCourante", DateTime.Now);
+
+                ConfigGlobale.Instance.AnneeCourante = Convert.ToInt16(monAnneeHttp.First().valeur);
+            });
+
+            maThread.Start();
+            while (maThread.ThreadState == ThreadState.Running)
+            {
+                Thread.Sleep(500);
+            }
+        }
     }
 }

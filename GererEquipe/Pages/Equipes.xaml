@@ -46,11 +46,15 @@
             <MesControles:EntreeNumerique Grid.Row="2"
                                           Grid.Column="1"
                                           FormatExempleEntry="2001"
-                                          PermettreValeurNull="False"
+                                          LongueurMaxChampEdition="4"
+                                          ValeurMinimum="{Binding AnnneMinimum}"
+                                          ValeurMaximum="{Binding AnneeCourante}"
                                           Valeur="{Binding Path=equipe.anneeDebut}" />
             <Label Grid.Row="3" Grid.Column="0" Text="Année de fin équipe" />
             <MesControles:EntreeNumerique Grid.Row="3" Grid.Column="1"
                                           FormatExempleEntry="2001"
+                                          ValeurMinimum="1800"
+                                          ValeurMaximum="{Binding AnneeCourante}"
                                           PermettreValeurNull="True"
                                           Valeur="{Binding Path=equipe.anneeFin}" />
             <Label Grid.Row="4"

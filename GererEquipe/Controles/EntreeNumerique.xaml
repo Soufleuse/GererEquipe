@@ -8,7 +8,8 @@
     <HorizontalStackLayout HorizontalOptions="StartAndExpand">
         <Entry x:Name="txtValeur"
                MinimumWidthRequest="150"
-               Placeholder="{Binding FormatExempleEntry, FallbackValue='12345'}"
+               Placeholder="{Binding FormatExempleEntry, FallbackValue='0'}"
+               MaxLength="{Binding LongueurMaxChampEdition}"
                Text="{Binding Path=Valeur, Mode=TwoWay}"
                Unfocused="txtValeur_Unfocused" />
         <Label x:Name="lblMessageErreur"
