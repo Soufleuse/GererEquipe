@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:MesControles="clr-namespace:GererEquipe.Controles"
@@ -19,6 +19,10 @@
                     Text="Lister stats équipe"
                     MaximumWidthRequest="200"
                     Clicked="btnListerStatsEquipe_Clicked" />
+            <Button x:Name="btnAfficherPageTest"
+                    Text="Afficher page test"
+                    MaximumWidthRequest="200"
+                    Clicked="btnAfficherPageTest_Clicked" />
         </HorizontalStackLayout>
         <ListView Margin="0,4,0,4"
                   ItemsSource="{Binding listeEquipe}"

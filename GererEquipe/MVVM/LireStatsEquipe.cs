@@ -92,15 +92,15 @@ namespace GererEquipe.MVVM
             }
         }
 
-        private CsBaseCommande _SauvegarderStatsEquipe = null;
-        public CsBaseCommande SauvegarderStatsEquipe
+        private Command _SauvegarderStatsEquipe = null;
+        public Command SauvegarderStatsEquipe
         {
             get
             {
                 if (_SauvegarderStatsEquipe == null)
                 {
                     Action<object> action = new Action<object>(SauvegarderStatsEquipeRoutine);
-                    _SauvegarderStatsEquipe = new CsBaseCommande(action);
+                    _SauvegarderStatsEquipe = new Command(action);
                 }
 
                 return _SauvegarderStatsEquipe;

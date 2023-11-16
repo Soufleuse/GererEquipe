@@ -28,20 +28,25 @@
             </Grid.RowDefinitions>
 
             <Label Grid.Row="0" Grid.Column="0" Text="Nom équipe" />
-            <Entry Grid.Row="0"
-                   Grid.Column="1"
-                   Placeholder="abcde"
-                   Text="{Binding Path=equipe.nomEquipe}" />
+            <MesControles:EntreeTexteObligatoire Grid.Row="0"
+                                                 Grid.Column="1"
+                                                 FormatExempleEntry="abcde"
+                                                 LongueurMaxChampEdition="50"
+                                                 EstValeurValide="{Binding Path=EstNomEquipeValide, Mode=TwoWay}"
+                                                 Valeur="{Binding Path=equipe.nomEquipe}" />
             <Button Grid.Row="0"
                     Grid.Column="2"
                     Text="Nouvelle équipe"
                     MaximumWidthRequest="150"
+                    MaximumHeightRequest="40"
                     Command="{Binding Path=InitialiserNouvelleEquipe}" />
             <Label Grid.Row="1" Grid.Column="0" Text="Ville" />
-            <Entry Grid.Row="1"
-                   Grid.Column="1"
-                   Placeholder="abcde"
-                   Text="{Binding Path=equipe.ville}" />
+            <MesControles:EntreeTexteObligatoire Grid.Row="1"
+                                                 Grid.Column="1"
+                                                 FormatExempleEntry="abcde"
+                                                 LongueurMaxChampEdition="50"
+                                                 EstValeurValide="{Binding Path=EstVilleValide}"
+                                                 Valeur="{Binding Path=equipe.ville}" />
             <Label Grid.Row="2" Grid.Column="0" Text="Année création équipe" />
             <MesControles:EntreeNumerique Grid.Row="2"
                                           Grid.Column="1"
@@ -53,7 +58,7 @@
             <Label Grid.Row="3" Grid.Column="0" Text="Année de fin équipe" />
             <MesControles:EntreeNumerique Grid.Row="3" Grid.Column="1"
                                           FormatExempleEntry="2001"
-                                          ValeurMinimum="1800"
+                                          ValeurMinimum="{Binding AnnneMinimum}"
                                           ValeurMaximum="{Binding AnneeCourante}"
                                           PermettreValeurNull="True"
                                           Valeur="{Binding Path=equipe.anneeFin}" />
@@ -65,9 +70,10 @@
                     Grid.Column="1"
                     WidthRequest="200"
                     HorizontalOptions="Start"
-                    ItemsSource="{Binding Path=listeEquipeEstDevenu, Mode=TwoWay}"
+                    ItemsSource="{Binding Path=listeEquipeEstDevenu}"
                     SelectedIndex="{Binding Path=selectedIndexEstDevenueEquipe, Mode=TwoWay}" />
-            <Button Grid.Row="5"
+            <Button x:Name="btnSauvegarderEquipe"
+                    Grid.Row="5"
                     Grid.ColumnSpan="2"
                     MaximumWidthRequest="125"
                     Text="Sauvegarder"

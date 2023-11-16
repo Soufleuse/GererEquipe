@@ -8,20 +8,19 @@ namespace GererEquipe.MVVM
 {
     public class LireEquipe : CsBaseContexte
     {
-        public LireEquipe(int pAnneeCourante)
+        public LireEquipe(int pAnneeCourante, IEnumerable<EquipeDto> listeEquipe)
         {
             _AnneeCourante = pAnneeCourante;
             NotifierChangement("AnneeCourante");
+
+            _listeEquipeEstDevenu = listeEquipe;
         }
 
-        public async void LireUneEquipe(int noEquipe, IEnumerable<EquipeDto> listeEquipe)
+        public async void LireUneEquipe(int noEquipe)
         {
             equipe = null;
             var monClientHttp = new EquipeServices();
             equipe = await monClientHttp.ObtenirEquipeAsync(noEquipe);
-
-            _listeEquipeEstDevenu = listeEquipe;
-            NotifierChangement("listeEquipeEstDevenu");
 
             selectedIndexEstDevenueEquipe = -1;
             if (equipe.estDevenueEquipe.HasValue)
@@ -45,7 +44,6 @@ namespace GererEquipe.MVVM
         }
 
         private string _messageErreur = string.Empty;
-
         public string messageErreur
         {
             get { return _messageErreur; }
@@ -60,7 +58,6 @@ namespace GererEquipe.MVVM
         }
 
         private IEnumerable<EquipeDto> _listeEquipeEstDevenu = null;
-
         public IEnumerable<EquipeDto> listeEquipeEstDevenu
         {
             get { return _listeEquipeEstDevenu; }
@@ -91,30 +88,65 @@ namespace GererEquipe.MVVM
             }
         }
 
-        private int AnnneMinimum { get {  return 1800; } }
+        public int AnnneMinimum { get { return 1800; } }
+        private bool _EstNomEquipeValide;
+        public bool EstNomEquipeValide
+        {
+            get { return _EstNomEquipeValide; }
+            set
+            {
+                if (EstNomEquipeValide != value)
+                {
+                    _EstNomEquipeValide = value;
+                    NotifierChangement("EstNomEquipeValide");
+                    SauvegarderEquipe.ChangeCanExecute();
+                }
+            }
+        }
+
+        public bool _EstVilleValide { get; set; }
+        public bool EstVilleValide
+        {
+            get { return _EstVilleValide; }
+            set
+            {
+                if (EstVilleValide != value)
+                {
+                    _EstVilleValide = value;
+                    NotifierChangement("EstVilleValide");
+                    SauvegarderEquipe.ChangeCanExecute();
+                }
+            }
+        }
 
         private int _AnneeCourante = 0;
         public int AnneeCourante { get { return _AnneeCourante; } }
 
-        private CsBaseCommande _SauvegarderEquipe = null;
-        public CsBaseCommande SauvegarderEquipe
+        private Command _SauvegarderEquipe = null;
+        public Command SauvegarderEquipe
         {
             get
             {
                 if(_SauvegarderEquipe == null)
                 {
                     Action<object> action = new Action<object>(SauvegarderEquipeRoutine);
-                    _SauvegarderEquipe = new CsBaseCommande(action);
+                    Func<object, bool> predicat = new Func<object, bool>(PredicatSauvegarderEquipeRoutine);
+                    _SauvegarderEquipe = new Command(action, predicat);
                 }
 
                 return _SauvegarderEquipe;
             }
         }
 
+        private bool PredicatSauvegarderEquipeRoutine(object objParametre)
+        {
+            return EstNomEquipeValide && EstVilleValide;
+        }
+
         private async void SauvegarderEquipeRoutine(object objParametre)
         {
             equipe.estDevenueEquipe = null;
-            if(estDevenueCetteEquipe != null)
+            if (estDevenueCetteEquipe != null)
             {
                 equipe.estDevenueEquipe = estDevenueCetteEquipe.id;
             }
@@ -134,16 +166,16 @@ namespace GererEquipe.MVVM
             }
         }
 
-        private CsBaseCommande _InitialiserNouvelleEquipe = null;
+        private Command _InitialiserNouvelleEquipe = null;
 
-        public CsBaseCommande InitialiserNouvelleEquipe
+        public Command InitialiserNouvelleEquipe
         {
             get
             {
                 if(_InitialiserNouvelleEquipe == null)
                 {
                     Action<object> action = new Action<object>(InitialiserNouvelleEquipeRoutine);
-                    _InitialiserNouvelleEquipe = new CsBaseCommande(action);
+                    _InitialiserNouvelleEquipe = new Command(action);
                 }
                 return _InitialiserNouvelleEquipe;
             }

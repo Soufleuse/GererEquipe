@@ -149,7 +149,7 @@ public partial class EntreeNumerique : ContentView
                                 typeof(string),
                                 typeof(EntreeNumerique),
                                 string.Empty,
-                                BindingMode.OneWay,
+                                BindingMode.TwoWay,
                                 null,
                                 OnFormatExempleEntryChanged);
 
@@ -192,7 +192,7 @@ public partial class EntreeNumerique : ContentView
 								typeof(EntreeNumerique),
 								0,
                                 BindingMode.TwoWay,
-                                IsValeurValide,
+                                EstValeurValide,
                                 OnValeurChanged,
                                 null,
                                 null,
@@ -218,7 +218,7 @@ public partial class EntreeNumerique : ContentView
 		}
     }
 
-    private static bool IsValeurValide(BindableObject pView, object pValue)
+    private static bool EstValeurValide(BindableObject pView, object pValue)
     {
         var monEntree = (EntreeNumerique)pView;
         monEntree.LibelleErreur = string.Empty;

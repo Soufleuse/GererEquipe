@@ -18,14 +18,21 @@ public partial class MainPage : ContentPage
     {
         var monContexte = (ListerEquipe)BindingContext;
         var idEquipe = ((EquipeDto)e.SelectedItem).id;
-        List<EquipeDto> listeEquipeFiltree = (from item in monContexte.listeEquipe where item.id != idEquipe || item.anneeFin != null select item).ToList();
+        List<EquipeDto> listeEquipeFiltree = (from item in monContexte.listeEquipe
+                                              where item.id != idEquipe && item.anneeFin == null
+                                              select item).ToList();
         listeEquipeFiltree.Insert(0, new EquipeDto());
         await Navigation.PushAsync(new Equipes(idEquipe, listeEquipeFiltree));
     }
 
     private async void btnNouvelleEquipe_Clicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new Equipes());
+        var monContexte = (ListerEquipe)BindingContext;
+        List<EquipeDto> listeEquipeFiltree = (from item in monContexte.listeEquipe
+                                              where item.anneeFin == null
+                                              select item).ToList();
+        listeEquipeFiltree.Insert(0, new EquipeDto());
+        await Navigation.PushAsync(new Equipes(listeEquipeFiltree));
     }
 
     private async void btnListerStatsEquipe_Clicked(object sender, EventArgs e)
@@ -50,5 +57,10 @@ public partial class MainPage : ContentPage
                 Thread.Sleep(500);
             }
         }
+    }
+
+    private async void btnAfficherPageTest_Clicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new PageTest());
     }
 }
