@@ -68,7 +68,6 @@
                     Grid.ColumnSpan="2"
                     MaximumWidthRequest="125"
                     Text="Sauvegarder"
-                    IsEnabled="{Binding estBtnSauvegarderEnabled}"
                     Command="{Binding Path=SauvegarderStatsEquipe}" />
             <Entry Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding Path=messageErreur}" />
         </Grid>

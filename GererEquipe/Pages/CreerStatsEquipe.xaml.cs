@@ -15,12 +15,12 @@ public partial class CreerStatsEquipe : ContentPage
     {
         var monContexte = (LireStatsEquipe)BindingContext;
 
-        monContexte.estBtnSauvegarderEnabled = false;
+        monContexte.estEquipeSelectionnee = false;
         monContexte.statsEquipe.equipeId = 0;
         if (monContexte.equipeSelectionnee != null)
         {
             monContexte.statsEquipe.equipeId = monContexte.equipeSelectionnee.id;
-            monContexte.estBtnSauvegarderEnabled = true;
+            monContexte.estEquipeSelectionnee = true;
         }
     }
 }

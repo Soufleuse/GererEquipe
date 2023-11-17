@@ -43,6 +43,8 @@ namespace GererEquipe.MVVM
             }
         }
 
+        public bool _EstInitNouvlEquipeDejaPresse = false;
+
         private string _messageErreur = string.Empty;
         public string messageErreur
         {
@@ -167,7 +169,6 @@ namespace GererEquipe.MVVM
         }
 
         private Command _InitialiserNouvelleEquipe = null;
-
         public Command InitialiserNouvelleEquipe
         {
             get
@@ -175,7 +176,8 @@ namespace GererEquipe.MVVM
                 if(_InitialiserNouvelleEquipe == null)
                 {
                     Action<object> action = new Action<object>(InitialiserNouvelleEquipeRoutine);
-                    _InitialiserNouvelleEquipe = new Command(action);
+                    Func<object, bool> predicat = new Func<object, bool>(ModifierEtatBoutonInit);
+                    _InitialiserNouvelleEquipe = new Command(action, predicat);
                 }
                 return _InitialiserNouvelleEquipe;
             }
@@ -185,6 +187,10 @@ namespace GererEquipe.MVVM
         {
             equipe = new EquipeDto();
             equipe.anneeDebut = ConfigGlobale.Instance.AnneeCourante;
+            _EstInitNouvlEquipeDejaPresse = true;
+            InitialiserNouvelleEquipe.ChangeCanExecute();
         }
+
+        private bool ModifierEtatBoutonInit(object pParametres) { return !_EstInitNouvlEquipeDejaPresse; }
     }
 }

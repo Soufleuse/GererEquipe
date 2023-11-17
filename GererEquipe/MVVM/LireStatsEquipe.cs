@@ -20,6 +20,7 @@ namespace GererEquipe.MVVM
             this.statsEquipe = statsEquipeLocale;
 
             statsEquipe.anneeStats = ConfigGlobale.Instance.AnneeCourante;
+            SauvegarderStatsEquipe.ChangeCanExecute();
         }
 
         public async void LireUneStatsEquipe(int idEquipe, short anneeStats)
@@ -78,16 +79,17 @@ namespace GererEquipe.MVVM
             }
         }
 
-        private bool _estBtnSauvegarderEnabled = true;
-        public bool estBtnSauvegarderEnabled
+        private bool _estEquipeSelectionnee = false;
+        public bool estEquipeSelectionnee
         {
-            get { return _estBtnSauvegarderEnabled; }
+            get { return _estEquipeSelectionnee; }
             set
             {
-                if (estBtnSauvegarderEnabled != value)
+                if (estEquipeSelectionnee != value)
                 {
-                    _estBtnSauvegarderEnabled = value;
-                    NotifierChangement("estBtnSauvegarderEnabled");
+                    _estEquipeSelectionnee = value;
+                    NotifierChangement("estEquipeSelectionnee");
+                    SauvegarderStatsEquipe.ChangeCanExecute();
                 }
             }
         }
@@ -100,7 +102,8 @@ namespace GererEquipe.MVVM
                 if (_SauvegarderStatsEquipe == null)
                 {
                     Action<object> action = new Action<object>(SauvegarderStatsEquipeRoutine);
-                    _SauvegarderStatsEquipe = new Command(action);
+                    Func<object, bool> predisMoi = new Func<object, bool>(SauvegarderStatsEquipePredicat);
+                    _SauvegarderStatsEquipe = new Command(action, predisMoi);
                 }
 
                 return _SauvegarderStatsEquipe;
@@ -122,6 +125,11 @@ namespace GererEquipe.MVVM
                     messageErreur = string.Format("Une erreur est survenue; no de l'erreur : {0}.", (int)maStatuedeCire);
                     break;
             }
+        }
+
+        private bool SauvegarderStatsEquipePredicat(object pParametres)
+        {
+            return estEquipeSelectionnee;
         }
     }
 }
