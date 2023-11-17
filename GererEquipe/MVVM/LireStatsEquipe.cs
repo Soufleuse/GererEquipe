@@ -23,12 +23,6 @@ namespace GererEquipe.MVVM
             SauvegarderStatsEquipe.ChangeCanExecute();
         }
 
-        public async void LireUneStatsEquipe(int idEquipe, short anneeStats)
-        {
-            var monClientHttp = new EquipeServices();
-            _statsEquipe = await monClientHttp.ObtenirStatsEquipe(idEquipe, anneeStats);
-        }
-
         private StatsEquipeDto _statsEquipe = null;
         public StatsEquipeDto statsEquipe
         {
