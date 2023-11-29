@@ -47,7 +47,7 @@ namespace GererEquipe.Data.Dto
             }
         }
 
-        private Int32 _anneeDebut = DateTime.Now.Year;
+        private Int32 _anneeDebut = 1800/*DateTime.Now.Year*/;
         public Int32 anneeDebut
         {
             get { return _anneeDebut; }

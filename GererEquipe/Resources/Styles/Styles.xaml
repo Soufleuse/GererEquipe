@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <?xaml-comp compile="true" ?>
 <ResourceDictionary 
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -416,15 +416,15 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Grid.Column="0" 
-                                   Text="{Binding nomEquipe}" />
+                       Text="{Binding nomEquipe}" />
                 <Label Grid.Column="1" 
-                                   Text="{Binding ville}" />
+                       Text="{Binding ville}" />
                 <Label Grid.Column="2" 
-                                   Text="{Binding anneeDebut}" />
+                       Text="{Binding anneeDebut}" />
                 <Label Grid.Column="3" 
-                                   Text="{Binding anneeFin}" />
+                       Text="{Binding anneeFin}" />
                 <Label Grid.Column="4" 
-                                   Text="{Binding nomEquipeVilleEstDevenueEquipe}" />
+                       Text="{Binding nomEquipeVilleEstDevenueEquipe}" />
             </Grid>
         </ViewCell>
     </DataTemplate>
@@ -465,21 +465,21 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Grid.Column="0"
-                           Text="{Binding equipe.nomEquipe}" />
+                       Text="{Binding equipe.nomEquipe}" />
                 <Label Grid.Column="1"
-                           Text="{Binding equipe.ville}" />
+                       Text="{Binding equipe.ville}" />
                 <Label Grid.Column="2"
-                           Text="{Binding nbPartiesJouees}" />
+                       Text="{Binding nbPartiesJouees}" />
                 <Label Grid.Column="3"
-                           Text="{Binding nbVictoires}" />
+                       Text="{Binding nbVictoires}" />
                 <Label Grid.Column="4"
-                           Text="{Binding nbDefaites}"
-                           Margin="10,0,0,0" />
+                       Text="{Binding nbDefaites}"
+                       Margin="10,0,0,0" />
                 <Label Grid.Column="5"
-                           Text="{Binding nbDefProlo}"
-                           Margin="10,0,0,0" />
+                       Text="{Binding nbDefProlo}"
+                       Margin="10,0,0,0" />
                 <Label Grid.Column="6"
-                           Text="{Binding nbPoints}" />
+                       Text="{Binding nbPoints}" />
             </Grid>
         </ViewCell>
     </DataTemplate>

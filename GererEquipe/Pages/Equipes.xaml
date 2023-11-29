@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:Convertisseurs="clr-namespace:GererEquipe.MVVM.Converter"
-             xmlns:MesControles="clr-namespace:GererEquipe.Controles"
+             xmlns:MesControles="clr-namespace:SteveMaui.Controles;assembly=SteveMaui"
              x:Class="GererEquipe.Pages.Equipes"
              Title="Equipes">
 
@@ -28,29 +28,38 @@
             </Grid.RowDefinitions>
 
             <Label Grid.Row="0" Grid.Column="0" Text="Nom équipe" />
-            <Entry Grid.Row="0"
-                   Grid.Column="1"
-                   Placeholder="abcde"
-                   Text="{Binding Path=equipe.nomEquipe}" />
+            <MesControles:EntreeTexteObligatoire Grid.Row="0"
+                                                 Grid.Column="1"
+                                                 FormatExempleEntry="abcde"
+                                                 LongueurMaxChampEdition="50"
+                                                 EstValeurValide="{Binding Path=EstNomEquipeValide, Mode=TwoWay}"
+                                                 Valeur="{Binding Path=equipe.nomEquipe}" />
             <Button Grid.Row="0"
                     Grid.Column="2"
                     Text="Nouvelle équipe"
                     MaximumWidthRequest="150"
+                    MaximumHeightRequest="40"
                     Command="{Binding Path=InitialiserNouvelleEquipe}" />
             <Label Grid.Row="1" Grid.Column="0" Text="Ville" />
-            <Entry Grid.Row="1"
-                   Grid.Column="1"
-                   Placeholder="abcde"
-                   Text="{Binding Path=equipe.ville}" />
+            <MesControles:EntreeTexteObligatoire Grid.Row="1"
+                                                 Grid.Column="1"
+                                                 FormatExempleEntry="abcde"
+                                                 LongueurMaxChampEdition="50"
+                                                 EstValeurValide="{Binding Path=EstVilleValide}"
+                                                 Valeur="{Binding Path=equipe.ville}" />
             <Label Grid.Row="2" Grid.Column="0" Text="Année création équipe" />
             <MesControles:EntreeNumerique Grid.Row="2"
                                           Grid.Column="1"
                                           FormatExempleEntry="2001"
-                                          PermettreValeurNull="False"
+                                          LongueurMaxChampEdition="4"
+                                          ValeurMinimum="{Binding AnnneMinimum}"
+                                          ValeurMaximum="{Binding AnneeCourante}"
                                           Valeur="{Binding Path=equipe.anneeDebut}" />
             <Label Grid.Row="3" Grid.Column="0" Text="Année de fin équipe" />
             <MesControles:EntreeNumerique Grid.Row="3" Grid.Column="1"
                                           FormatExempleEntry="2001"
+                                          ValeurMinimum="{Binding AnnneMinimum}"
+                                          ValeurMaximum="{Binding AnneeCourante}"
                                           PermettreValeurNull="True"
                                           Valeur="{Binding Path=equipe.anneeFin}" />
             <Label Grid.Row="4"
@@ -61,9 +70,10 @@
                     Grid.Column="1"
                     WidthRequest="200"
                     HorizontalOptions="Start"
-                    ItemsSource="{Binding Path=listeEquipeEstDevenu, Mode=TwoWay}"
+                    ItemsSource="{Binding Path=listeEquipeEstDevenu}"
                     SelectedIndex="{Binding Path=selectedIndexEstDevenueEquipe, Mode=TwoWay}" />
-            <Button Grid.Row="5"
+            <Button x:Name="btnSauvegarderEquipe"
+                    Grid.Row="5"
                     Grid.ColumnSpan="2"
                     MaximumWidthRequest="125"
                     Text="Sauvegarder"

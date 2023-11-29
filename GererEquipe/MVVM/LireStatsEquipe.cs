@@ -3,6 +3,7 @@ using System.Net;
 using GererEquipe.Data.Dto;
 using GererEquipe.Data.Services;
 using SteveMAUI.MVVM;
+using System.ComponentModel;
 
 namespace GererEquipe.MVVM
 {
@@ -19,15 +20,15 @@ namespace GererEquipe.MVVM
             }
             this.statsEquipe = statsEquipeLocale;
 
-            // Voir le summary de la fonction
-            AllerChercherAnneeCourante();
             statsEquipe.anneeStats = ConfigGlobale.Instance.AnneeCourante;
+            this.nbPartiesJoueesMax = ConfigGlobale.Instance.nbPartiesJoueesMax;
+            SauvegarderStatsEquipe.ChangeCanExecute();
+            statsEquipe.PropertyChanged += StatsEquipe_PropertyChanged;
         }
 
-        public async void LireUneStatsEquipe(int idEquipe, short anneeStats)
+        private void StatsEquipe_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            var monClientHttp = new EquipeServices();
-            _statsEquipe = await monClientHttp.ObtenirStatsEquipe(idEquipe, anneeStats);
+            SauvegarderStatsEquipe.ChangeCanExecute();
         }
 
         private StatsEquipeDto _statsEquipe = null;
@@ -66,20 +67,6 @@ namespace GererEquipe.MVVM
             }
         }
 
-        private short _anneeStats = short.MinValue;
-        public short anneeStats
-        {
-            get { return _anneeStats; }
-            set
-            {
-                if(anneeStats != value)
-                {
-                    _anneeStats = value;
-                    NotifierChangement("anneeStats");
-                }
-            }
-        }
-
         private string _messageErreur = string.Empty;
         public string messageErreur
         {
@@ -94,29 +81,31 @@ namespace GererEquipe.MVVM
             }
         }
 
-        private bool _estBtnSauvegarderEnabled = true;
-        public bool estBtnSauvegarderEnabled
+        private bool _estEquipeSelectionnee = false;
+        public bool estEquipeSelectionnee
         {
-            get { return _estBtnSauvegarderEnabled; }
+            get { return _estEquipeSelectionnee; }
             set
             {
-                if (estBtnSauvegarderEnabled != value)
+                if (estEquipeSelectionnee != value)
                 {
-                    _estBtnSauvegarderEnabled = value;
-                    NotifierChangement("estBtnSauvegarderEnabled");
+                    _estEquipeSelectionnee = value;
+                    NotifierChangement("estEquipeSelectionnee");
+                    SauvegarderStatsEquipe.ChangeCanExecute();
                 }
             }
         }
 
-        private CsBaseCommande _SauvegarderStatsEquipe = null;
-        public CsBaseCommande SauvegarderStatsEquipe
+        private Command _SauvegarderStatsEquipe = null;
+        public Command SauvegarderStatsEquipe
         {
             get
             {
                 if (_SauvegarderStatsEquipe == null)
                 {
                     Action<object> action = new Action<object>(SauvegarderStatsEquipeRoutine);
-                    _SauvegarderStatsEquipe = new CsBaseCommande(action);
+                    Func<object, bool> predisMoi = new Func<object, bool>(SauvegarderStatsEquipePredicat);
+                    _SauvegarderStatsEquipe = new Command(action, predisMoi);
                 }
 
                 return _SauvegarderStatsEquipe;
@@ -140,20 +129,79 @@ namespace GererEquipe.MVVM
             }
         }
 
-        /// <summary>
-        /// Juste pour faire sûr qu'on a été chercher l'année courante
-        /// </summary>
-        private async void AllerChercherAnneeCourante()
+        private bool SauvegarderStatsEquipePredicat(object pParametres)
         {
-            if (ConfigGlobale.Instance.AnneeCourante == short.MinValue)
+            bool retour = estEquipeSelectionnee && estNbPartieJoueeValide && estNbVictoiresValide &&
+                estNbDefaitesValide && estNbDefProloValide;
+            if (retour)
             {
-                var monParamHttp = new ParametresServices();
-                var monAnneeHttp = await monParamHttp.ObtenirParametreAsync("anneeCourante", DateTime.Now);
-
-                ConfigGlobale.Instance.AnneeCourante = Convert.ToInt16(monAnneeHttp.First().valeur);
+                // Tests unitaires réussis, on vérifie que le nombre de victoires, de défaites et de défaites en
+                // prolongation est égal au nombre de parties jouées.
+                int totalParties = statsEquipe.nbVictoires + statsEquipe.nbDefaites + statsEquipe.nbDefProlo;
+                retour = totalParties == statsEquipe.nbPartiesJouees;    // Retournera faux si le total diffère du nombre de parties jouées.
+                messageErreur = string.Empty;
+                if (!retour)
+                {
+                    messageErreur = "Le total de victoires, de défaites et de défaites en prolongation doit égaler le nombre de parties jouées.";
+                }
             }
 
-            anneeStats = ConfigGlobale.Instance.AnneeCourante;
+            return retour;
+        }
+
+        private int _nbPartiesJoueesMax;
+        public int nbPartiesJoueesMax
+        {
+            get { return _nbPartiesJoueesMax; }
+            set
+            {
+                _nbPartiesJoueesMax = value;
+                NotifierChangement(nameof(nbPartiesJoueesMax));
+            }
+        }
+
+        private bool _estNbPartieJoueeValide;
+        public bool estNbPartieJoueeValide
+        {
+            get { return _estNbPartieJoueeValide; }
+            set
+            {
+                _estNbPartieJoueeValide = value;
+                SauvegarderStatsEquipe.ChangeCanExecute();
+            }
+        }
+
+        private bool _estNbVictoiresValide;
+        public bool estNbVictoiresValide
+        {
+            get { return _estNbVictoiresValide; }
+            set
+            {
+                _estNbVictoiresValide = value;
+                SauvegarderStatsEquipe.ChangeCanExecute();
+            }
+        }
+
+        private bool _estNbDefaitesValide;
+        public bool estNbDefaitesValide
+        {
+            get { return _estNbDefaitesValide; }
+            set
+            {
+                _estNbDefaitesValide = value;
+                SauvegarderStatsEquipe.ChangeCanExecute();
+            }
+        }
+
+        private bool _estNbDefProloValide;
+        public bool estNbDefProloValide
+        {
+            get { return _estNbDefProloValide; }
+            set
+            {
+                _estNbDefProloValide = value;
+                SauvegarderStatsEquipe.ChangeCanExecute();
+            }
         }
     }
 }

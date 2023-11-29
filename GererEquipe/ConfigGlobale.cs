@@ -1,5 +1,4 @@
 ﻿using System;
-using GererEquipe.Data.Services;
 
 namespace GererEquipe
 {
@@ -31,14 +30,14 @@ namespace GererEquipe
             set { _anneeCourante = value; }
         }
 
-        private ConfigGlobale() { }
-
-        internal async void AllerChercherAnneeCourante()
+        private short _nbPartiesJoueesMax = 0;
+        public short nbPartiesJoueesMax
         {
-            var monParamHttp = new ParametresServices();
-            var monAnneeHttp = await monParamHttp.ObtenirParametreAsync("anneeCourante", DateTime.Now);
-
-            _anneeCourante = Convert.ToInt16(monAnneeHttp.First().valeur);
+            get { return _nbPartiesJoueesMax; }
+            set { _nbPartiesJoueesMax = value; }
         }
+
+
+        private ConfigGlobale() { }
     }
 }
