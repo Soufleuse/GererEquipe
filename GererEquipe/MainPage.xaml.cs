@@ -51,16 +51,19 @@ public partial class MainPage : ContentPage
                 ConfigGlobale.Instance.AnneeCourante = Convert.ToInt16(monAnneeHttp.First().valeur);
             });
 
+            var maThread2 = new Thread(async () => {
+                var monParamHttp = new ParametresServices();
+                var monNbPartiesJouees = await monParamHttp.ObtenirParametreAsync("nombrePartiesJouees", DateTime.Now);
+
+                ConfigGlobale.Instance.nbPartiesJoueesMax = Convert.ToInt16(monNbPartiesJouees.First().valeur);
+            });
+
             maThread.Start();
-            while (maThread.ThreadState == ThreadState.Running)
+            maThread2.Start();
+            while (maThread.ThreadState == ThreadState.Running || maThread2.ThreadState == ThreadState.Running)
             {
                 Thread.Sleep(500);
             }
         }
-    }
-
-    private async void btnAfficherPageTest_Clicked(object sender, EventArgs e)
-    {
-        await Navigation.PushAsync(new PageTest());
     }
 }

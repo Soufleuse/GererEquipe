@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:Convertisseurs="clr-namespace:GererEquipe.MVVM.Converter"
-             xmlns:MesControles="clr-namespace:GererEquipe.Controles"
+             xmlns:MesControles="clr-namespace:SteveMaui.Controles;assembly=SteveMaui"
              x:Class="GererEquipe.Pages.Equipes"
              Title="Equipes">
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:MesControles="clr-namespace:GererEquipe.Controles"
+             xmlns:MesControles="clr-namespace:SteveMaui.Controles;assembly=SteveMaui"
              x:Class="GererEquipe.Pages.UneStatsEquipe"
              Title="Modifier une stats d'équipe">
 
@@ -25,15 +25,18 @@
                 
             <Label Grid.Row="0" Grid.Column="0" Text="Nom équipe" />
             <Entry Grid.Row="0"
-                    Grid.Column="1"
-                    Placeholder="abcde"
-                    IsReadOnly="True"
-                    Text="{Binding Path=statsEquipe.equipe}" />
+                   Grid.Column="1"
+                   Placeholder="abcde"
+                   IsReadOnly="True"
+                   Text="{Binding Path=statsEquipe.equipe}" />
             <Label Grid.Row="1" Grid.Column="0" Text="Nb parties jouées" />
             <MesControles:EntreeNumerique Grid.Row="1"
                                           Grid.Column="1"
                                           FormatExempleEntry="82"
                                           LongueurMaxChampEdition="2"
+                                          ValeurMinimum="0"
+                                          ValeurMaximum="{Binding Path=nbPartiesJoueesMax}"
+                                          EstValeurValide="{Binding Path=estNbPartieJoueeValide}"
                                           Valeur="{Binding Path=statsEquipe.nbPartiesJouees}" />
             <HorizontalStackLayout Grid.Row="1" Grid.Column="2" HorizontalOptions="Start">
                 <Label VerticalTextAlignment="Center" Text="Année" />
@@ -46,18 +49,27 @@
                                           Grid.Column="1"
                                           FormatExempleEntry="0"
                                           LongueurMaxChampEdition="2"
+                                          ValeurMinimum="0"
+                                          ValeurMaximum="{Binding Path=nbPartiesJoueesMax}"
+                                          EstValeurValide="{Binding Path=estNbVictoiresValide}"
                                           Valeur="{Binding Path=statsEquipe.nbVictoires}" />
             <Label Grid.Row="3" Grid.Column="0" Text="Nb défaites" />
             <MesControles:EntreeNumerique Grid.Row="3"
                                           Grid.Column="1"
                                           FormatExempleEntry="0"
                                           LongueurMaxChampEdition="2"
+                                          ValeurMinimum="0"
+                                          ValeurMaximum="{Binding Path=nbPartiesJoueesMax}"
+                                          EstValeurValide="{Binding Path=estNbDefaitesValide}"
                                           Valeur="{Binding Path=statsEquipe.nbDefaites}" />
             <Label Grid.Row="4" Grid.Column="0" Text="Nb déf. prol." />
             <MesControles:EntreeNumerique Grid.Row="4"
                                           Grid.Column="1"
                                           FormatExempleEntry="0"
                                           LongueurMaxChampEdition="2"
+                                          ValeurMinimum="0"
+                                          ValeurMaximum="{Binding Path=nbPartiesJoueesMax}"
+                                          EstValeurValide="{Binding Path=estNbDefProloValide}"
                                           Valeur="{Binding Path=statsEquipe.nbDefProlo}" />
             <Label Grid.Row="5" Grid.Column="0" Text="Nb points" />
             <MesControles:EntreeNumerique Grid.Row="5"

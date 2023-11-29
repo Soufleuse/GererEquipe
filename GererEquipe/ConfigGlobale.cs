@@ -30,6 +30,14 @@ namespace GererEquipe
             set { _anneeCourante = value; }
         }
 
+        private short _nbPartiesJoueesMax = 0;
+        public short nbPartiesJoueesMax
+        {
+            get { return _nbPartiesJoueesMax; }
+            set { _nbPartiesJoueesMax = value; }
+        }
+
+
         private ConfigGlobale() { }
     }
 }

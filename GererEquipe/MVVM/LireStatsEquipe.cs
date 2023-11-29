@@ -3,6 +3,7 @@ using System.Net;
 using GererEquipe.Data.Dto;
 using GererEquipe.Data.Services;
 using SteveMAUI.MVVM;
+using System.ComponentModel;
 
 namespace GererEquipe.MVVM
 {
@@ -20,6 +21,13 @@ namespace GererEquipe.MVVM
             this.statsEquipe = statsEquipeLocale;
 
             statsEquipe.anneeStats = ConfigGlobale.Instance.AnneeCourante;
+            this.nbPartiesJoueesMax = ConfigGlobale.Instance.nbPartiesJoueesMax;
+            SauvegarderStatsEquipe.ChangeCanExecute();
+            statsEquipe.PropertyChanged += StatsEquipe_PropertyChanged;
+        }
+
+        private void StatsEquipe_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
             SauvegarderStatsEquipe.ChangeCanExecute();
         }
 
@@ -123,7 +131,77 @@ namespace GererEquipe.MVVM
 
         private bool SauvegarderStatsEquipePredicat(object pParametres)
         {
-            return estEquipeSelectionnee;
+            bool retour = estEquipeSelectionnee && estNbPartieJoueeValide && estNbVictoiresValide &&
+                estNbDefaitesValide && estNbDefProloValide;
+            if (retour)
+            {
+                // Tests unitaires réussis, on vérifie que le nombre de victoires, de défaites et de défaites en
+                // prolongation est égal au nombre de parties jouées.
+                int totalParties = statsEquipe.nbVictoires + statsEquipe.nbDefaites + statsEquipe.nbDefProlo;
+                retour = totalParties == statsEquipe.nbPartiesJouees;    // Retournera faux si le total diffère du nombre de parties jouées.
+                messageErreur = string.Empty;
+                if (!retour)
+                {
+                    messageErreur = "Le total de victoires, de défaites et de défaites en prolongation doit égaler le nombre de parties jouées.";
+                }
+            }
+
+            return retour;
+        }
+
+        private int _nbPartiesJoueesMax;
+        public int nbPartiesJoueesMax
+        {
+            get { return _nbPartiesJoueesMax; }
+            set
+            {
+                _nbPartiesJoueesMax = value;
+                NotifierChangement(nameof(nbPartiesJoueesMax));
+            }
+        }
+
+        private bool _estNbPartieJoueeValide;
+        public bool estNbPartieJoueeValide
+        {
+            get { return _estNbPartieJoueeValide; }
+            set
+            {
+                _estNbPartieJoueeValide = value;
+                SauvegarderStatsEquipe.ChangeCanExecute();
+            }
+        }
+
+        private bool _estNbVictoiresValide;
+        public bool estNbVictoiresValide
+        {
+            get { return _estNbVictoiresValide; }
+            set
+            {
+                _estNbVictoiresValide = value;
+                SauvegarderStatsEquipe.ChangeCanExecute();
+            }
+        }
+
+        private bool _estNbDefaitesValide;
+        public bool estNbDefaitesValide
+        {
+            get { return _estNbDefaitesValide; }
+            set
+            {
+                _estNbDefaitesValide = value;
+                SauvegarderStatsEquipe.ChangeCanExecute();
+            }
+        }
+
+        private bool _estNbDefProloValide;
+        public bool estNbDefProloValide
+        {
+            get { return _estNbDefProloValide; }
+            set
+            {
+                _estNbDefProloValide = value;
+                SauvegarderStatsEquipe.ChangeCanExecute();
+            }
         }
     }
 }

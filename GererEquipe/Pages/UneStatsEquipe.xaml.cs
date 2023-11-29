@@ -9,5 +9,6 @@ public partial class UneStatsEquipe : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = new LireStatsEquipe(statsEquipeSelectionnee, pListeEquipe);
-	}
+		((LireStatsEquipe)BindingContext).estEquipeSelectionnee = true;
+    }
 }
