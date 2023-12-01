@@ -21,6 +21,8 @@
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
                 
             <Label Grid.Row="0" Grid.Column="0" Text="Nom équipe" />
@@ -76,12 +78,22 @@
                                           Grid.Column="1"
                                           EstLectureSeule="True"
                                           Valeur="{Binding Path=statsEquipe.nbPoints}" />
-            <Button Grid.Row="6"
+            <Label Grid.Row="6" Grid.Column="0" Text="Nb buts pour" />
+            <MesControles:EntreeNumerique Grid.Row="6"
+                                          Grid.Column="1"
+                                          EstValeurValide="{Binding Path=estNbButsPourValide}"
+                                          Valeur="{Binding Path=statsEquipe.nbButsPour}" />
+            <Label Grid.Row="7" Grid.Column="0" Text="Nb buts contre" />
+            <MesControles:EntreeNumerique Grid.Row="7"
+                                          Grid.Column="1"
+                                          EstValeurValide="{Binding Path=estNbButsContreValide}"
+                                          Valeur="{Binding Path=statsEquipe.nbButsContre}" />
+            <Button Grid.Row="8"
                     Grid.ColumnSpan="2"
                     MaximumWidthRequest="125"
                     Text="Sauvegarder"
                     Command="{Binding Path=SauvegarderStatsEquipe}" />
-            <Entry Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding Path=messageErreur}" />
+            <Entry Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" Text="{Binding Path=messageErreur}" />
         </Grid>
     </VerticalStackLayout>
 </ContentPage>

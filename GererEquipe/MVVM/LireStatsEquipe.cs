@@ -203,5 +203,33 @@ namespace GererEquipe.MVVM
                 SauvegarderStatsEquipe.ChangeCanExecute();
             }
         }
+
+        private bool _estNbButsPourValide;
+        public bool estNbButsPourValide
+        {
+            get { return _estNbButsPourValide; }
+            set
+            {
+                if (estNbButsPourValide != value)
+                {
+                    _estNbButsPourValide = value;
+                    SauvegarderStatsEquipe.ChangeCanExecute();
+                }
+            }
+        }
+
+        private bool _estNbButsContreValide;
+        public bool estNbButsContreValide
+        {
+            get { return _estNbButsContreValide; }
+            set
+            {
+                if (estNbButsContreValide != value)
+                {
+                    _estNbButsContreValide = value;
+                    SauvegarderStatsEquipe.ChangeCanExecute();
+                }
+            }
+        }
     }
 }
